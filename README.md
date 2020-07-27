@@ -1,0 +1,1 @@
+# amq-streams-broker-authorization-sample
