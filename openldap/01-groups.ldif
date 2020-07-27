@@ -1,0 +1,26 @@
+# Actual groups
+
+dn: cn=User,ou=groups,dc=example,dc=org
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: User
+uniqueMember: uid=kermit, ou=users,dc=example,dc=org
+uniqueMember: uid=pepe, ou=users,dc=example,dc=org
+uniqueMember: uid=gonzo, ou=users,dc=example,dc=org
+uniqueMember: uid=fozzie, ou=users,dc=example,dc=org
+uniqueMember: uid=bunsen,ou=users,dc=example,dc=org
+
+dn: cn=Admin,ou=groups,dc=example,dc=org
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: Admin
+uniqueMember: uid=kermit, ou=users,dc=example,dc=org
+uniqueMember: uid=fozzie, ou=users,dc=example,dc=org
+
+dn: cn=Sales,ou=groups,dc=example,dc=org
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: Sales
+uniqueMember: uid=pepe, ou=users,dc=example,dc=org
+uniqueMember: uid=gonzo, ou=users,dc=example,dc=org
+uniqueMember: uid=bunsen,ou=users,dc=example,dc=org
