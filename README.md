@@ -1,4 +1,4 @@
-# Strimzi + Keycloak + LDAP: Broker Authorization Sample
+# Kafka + Keycloak + LDAP: Broker Authorization Sample
 
 This use case demonstrates the following features: 
 
@@ -25,8 +25,8 @@ Make sure the following are installed and added to your PATH:
 The infrastructure to be created will consist of the following components: 
 
 - OpenLDAP - An LDAP Server for hosting LDAP groups and users
-- Keycloak/RHSSO - The **upstream** version of Red Hat SSO
-- Strimzi/AMQ Streams Kafka Cluster - The **upstream** version of AMQ Streams
+- [Keycloak](https://www.keycloak.org/)/[Red Hat SSO](https://access.redhat.com/products/red-hat-single-sign-on) - The **upstream** version of Red Hat SSO
+- [Strimzi](https://strimzi.io/)/[Red Hat AMQ Streams](https://www.redhat.com/en/resources/amq-streams-datasheet) Kafka Cluster - The **upstream** version of AMQ Streams
 
 NOTE: You will need to have the following namespaces available for use in this demo. 
 
