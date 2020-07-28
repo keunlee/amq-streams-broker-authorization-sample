@@ -191,14 +191,14 @@ export KAFKA_OPTS=" \
   -Djavax.net.ssl.trustStoreType=PKCS12"
 ```
 
-add your token endpoint to the environment: 
+Add your token endpoint to the environment: 
 
 ```bash
 # add TOKEN ENDPOINT to env
 export TOKEN_ENDPOINT=https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
 ```
 
-create JWT for the user "kermit"
+Create JWT for the user "kermit"
 
 ```bash
 # generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user kermit
@@ -206,7 +206,7 @@ REFRESH_TOKEN=$(~/bin/oauth.sh -q kermit) # password: pass
 ~/bin/jwt.sh $REFRESH_TOKEN
 ```
 
-generate oauth user properties for "kermit"
+Generate oauth user properties for "kermit"
 
 ```bash
 # generate oauth user properties - kermit
@@ -221,16 +221,16 @@ sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthL
 EOF
 ```
 
-using the oauth properites file we created, this will allow "kermit" to produce messages on the topic "my-topic". 
+Using the oauth properites file we created, this will allow "kermit" to produce messages on the topic "my-topic". 
 
-go ahead and generate some messages then hit ctrl-c to exit. 
+Go ahead and generate some messages then hit ctrl-c to exit. 
 
 ```bash
 # kermit produces messages on "my-topic"
 bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic --producer.config ~/kermit.properties
 ```
 
-generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user fozzie
+Generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user fozzie
 
 ```bash
 # generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user fozzie
@@ -238,7 +238,7 @@ REFRESH_TOKEN=$(~/bin/oauth.sh -q fozzie) # password: pass
 ~/bin/jwt.sh $REFRESH_TOKEN
 ```
 
-generate oauth user properties for "fozzie"
+Generate oauth user properties for "fozzie"
 
 ```bash
 # generate oauth user properties - fozzie
@@ -253,16 +253,16 @@ sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthL
 EOF
 ```
 
-using the oauth properites file we created, this will allow "fozzie" to consume messages on the topic "my-topic". 
+Using the oauth properites file we created, this will allow "fozzie" to consume messages on the topic "my-topic". 
 
-you should see messages that "kermit" produced earlier. hit ctrl-c to exit. 
+You should see messages that "kermit" produced earlier. hit ctrl-c to exit. 
 
 ```bash
 # fozzie consumes messages that kermit produced
 bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic  --from-beginning --consumer.config ~/kermit.properties
 ```
 
-or follow along in the asciinema recording below: 
+Follow along in the asciinema recording below: 
 
 [![asciicast](https://asciinema.org/a/vLmnBu6NagKAfdwnmoi7pkwDG.svg)](https://asciinema.org/a/vLmnBu6NagKAfdwnmoi7pkwDG)
 
