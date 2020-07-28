@@ -12,7 +12,7 @@ spec:
     - name: CLASSPATH
       value: /opt/kafka/libs/kafka-oauth-client-*:/opt/kafka/libs/kafka-oauth-common-*
     - name: OAUTH_TOKEN_ENDPOINT_URI
-      value: https://keycloak.keycloak:8443/auth/realms/authz/protocol/openid-connect/token
+      value: https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
     volumeMounts:
     - name: truststore
       mountPath: "/opt/kafka/certificates"

@@ -70,10 +70,6 @@ Between other LDAP Providers, these configurations will differ.
 
 5) click `save`, then click `Synchronize all users`
 
-6) validate users imported over from ldap by click on the `users` tab and then clicking on `view all users`
-
-![](assets/keycloak-setup-002.png)
-
 ## Import LDAP Groups
 
 1) select `User Federation` and then `ldap` 
@@ -82,29 +78,156 @@ Between other LDAP Providers, these configurations will differ.
 
 ![](assets/keycloak-setup-003.png)
 
-
 4) click `save` and then `Sync LDAP Groups to Keycloak`
 
+You can validate our LDAP users and groups by clicking on the `Users` and `Groups` tabs. 
 
-# Broker Authorization Rules
+You should see the following users: 
 
-The following use cases will demonstrate how to create various broker authorization rules and test them via kafka consumer/producer tools
+![](assets/keycloak-setup-004.png)
 
-## Consumer Topic Authorization
+and groups: 
 
-TODO
+![](assets/keycloak-setup-005.png)
 
-## Producer Topic Authorization
+# Broker Authorization
 
-TODO
+The following use cases will demonstrate how to create various broker authorization resources, policies, and permissions and test them via kafka consumer/producer tools
 
-## Consumer Cluster Authorization
+For each of the use cases below we will define/identify the following in Keycloak. 
 
-TODO
+## Admin Group Policy has full access to manage and affect consumer groups
 
-## Production Cluster Authorization
+**Resources**: `Group:*` 
 
-TODO
+(exists, no need to create)
+
+**Policies**: 
+
+- Name/Description: `Admin Group Policy`
+- Groups: `Admin`
+- Policy Type: `Group`
+
+![](assets/keycloak-setup-006.png)
+
+**Permissions**: 
+
+- Name/Description: `Admin Group Policy has full access to manage and affect consumer groups`
+- Type: `Resource`
+- Resource: `Group:*`
+- Policy: `Admin Group Policy`
+- Decision Strategy: `Unanimous`
+
+![](assets/keycloak-setup-007.png)
+
+## Admin Group Policy has full access to manage and affect producer topics
+
+**Resources**: `Topic:*`
+
+(exists, no need to create)
+
+**Policies**: `Admin Group Policy`
+
+(exists, created in previous use case, no need to create)
+
+**Permissions**: 
+
+- Name/Description: `Admin Group Policy has full access to manage and affect producer topics`
+- Type: `Resource`
+- Resource: `Topic:*`
+- Policy: `Admin Group Policy`
+- Decision Strategy: `Unanimous`
+
+![](assets/keycloak-setup-008.png)
+
+## Admin Group Policy has full access to config on any cluster
+
+**Resources**: `Cluster:*`
+
+(exists, no need to create)
+
+**Policies**: `Admin Group Policy`
+
+(exists, created in previous use case, no need to create)
+
+**Permissions**: 
+
+- Name/Description: `Admin Group Policy has full access to config on any cluster`
+- Type: `Resource`
+- Resource: `Cluster:*`
+- Policy: `Admin Group Policy`
+- Decision Strategy: `Unanimous`
+
+![](assets/keycloak-setup-009.png)
+
+## Testing Authorization Rules for Admin Group Policy
+
+Follow the comments in the bash code below: 
+
+```bash
+# switch to the `clients` namespace
+kubens clients
+
+# check the running pods
+# you should see a single running pod: kafka-client-shell
+kubectl get po
+
+# terminal into the pod
+kubectl exec -it kafka-client-shell -- /bin/bash
+```
+
+From this point on, you will be terminaled into the pod: 
+
+```bash
+# set up your TLS environment
+export PASSWORD=truststorepassword
+export KAFKA_OPTS=" \
+  -Djavax.net.ssl.trustStore=/opt/kafka/certificates/kafka-client-truststore.p12 \
+  -Djavax.net.ssl.trustStorePassword=$PASSWORD \
+  -Djavax.net.ssl.trustStoreType=PKCS12"
+
+# add TOKEN ENDPOINT to env
+export TOKEN_ENDPOINT=https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
+
+# generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user kermit
+REFRESH_TOKEN=$(~/bin/oauth.sh -q kermit) # password: pass
+~/bin/jwt.sh $REFRESH_TOKEN
+
+# generate oauth user properties - kermit
+cat > ~/kermit.properties << EOF
+security.protocol=SASL_SSL
+sasl.mechanism=OAUTHBEARER
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+  oauth.refresh.token="$REFRESH_TOKEN" \
+  oauth.client.id="kafka-cli" \
+  oauth.token.endpoint.uri="https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token" ;
+sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthLoginCallbackHandler
+EOF
+
+# kermit produces messages on "my-topic"
+bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic --producer.config ~/kermit.properties
+
+# generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user kermit
+REFRESH_TOKEN=$(~/bin/oauth.sh -q fozzie) # password: pass
+~/bin/jwt.sh $REFRESH_TOKEN
+
+# generate oauth user properties - fozzie
+cat > ~/fozzie.properties << EOF
+security.protocol=SASL_SSL
+sasl.mechanism=OAUTHBEARER
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+  oauth.refresh.token="$REFRESH_TOKEN" \
+  oauth.client.id="kafka-cli" \
+  oauth.token.endpoint.uri="https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token" ;
+sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthLoginCallbackHandler
+EOF
+
+# fozzie consumes messages that kermit produced
+bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic  --from-beginning --consumer.config ~/kermit.properties
+```
+or follow along in the asciinema recording below: 
+
+[![asciicast](https://asciinema.org/a/vLmnBu6NagKAfdwnmoi7pkwDG.svg)](https://asciinema.org/a/vLmnBu6NagKAfdwnmoi7pkwDG)
 
 # Sources
 

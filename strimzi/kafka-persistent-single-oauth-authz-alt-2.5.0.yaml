@@ -11,8 +11,8 @@ spec:
       # plain:
       #   authentication:
       #     type: oauth
-      #     validIssuerUri: http://keycloak:8080/auth/realms/authz
-      #     jwksEndpointUri: http://keycloak:8080/auth/realms/authz/protocol/openid-connect/certs
+      #     validIssuerUri: http://keycloak:8080/auth/realms/kafka-authz
+      #     jwksEndpointUri: http://keycloak:8080/auth/realms/kafka-authz/protocol/openid-connect/certs
       #     userNameClaim: preferred_username
       #     maxSecondsWithoutReauthentication: 3600
       #     jwksMinRefreshPauseSeconds: 5
@@ -23,8 +23,8 @@ spec:
           clientSecret:
             key: secret
             secretName: broker-oauth-secret
-          validIssuerUri: https://keycloak.keycloak:8443/auth/realms/authz
-          jwksEndpointUri: https://keycloak.keycloak:8443/auth/realms/authz/protocol/openid-connect/certs
+          validIssuerUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz
+          jwksEndpointUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/certs
           userNameClaim: preferred_username
           tlsTrustedCertificates:
           - secretName: ca-truststore
@@ -32,7 +32,7 @@ spec:
     authorization:
       type: keycloak
       clientId: kafka
-      tokenEndpointUri: https://keycloak.keycloak:8443/auth/realms/authz/protocol/openid-connect/token
+      tokenEndpointUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
       delegateToKafkaAcls: true
       superUsers:
       - User:service-account-kafka

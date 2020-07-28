@@ -1,0 +1,39 @@
+{
+  "realm": "kafka-authz",
+  "accessTokenLifespan": 120,
+  "ssoSessionIdleTimeout": 864000,
+  "ssoSessionMaxLifespan": 864000,
+  "enabled": true,
+  "sslRequired": "external",
+  "roles": {
+    "realm": [
+      {
+        "name": "Dev Team A",
+        "description": "Developer on Dev Team A"
+      },
+      {
+        "name": "Dev Team B",
+        "description": "Developer on Dev Team B"
+      },
+      {
+        "name": "Ops Team",
+        "description": "Operations team member"
+      }
+    ]
+  },
+  "groups" : [
+    {
+      "name" : "ClusterManager Group",
+      "path" : "/ClusterManager Group"
+    }, {
+      "name" : "ClusterManager-cluster2 Group",
+      "path" : "/ClusterManager-cluster2 Group"
+    }, {
+      "name" : "Ops Team Group",
+      "path" : "/Ops Team Group"
+    }
+  ],
+  "users": [],
+  "clients": [
+  ]
+}
