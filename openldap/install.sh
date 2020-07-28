@@ -1,3 +1,6 @@
+kubens default
+kubectl delete ns openldap
+
 kubectl create ns openldap
 kubens openldap
 

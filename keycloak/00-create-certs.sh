@@ -1,5 +1,3 @@
-pwd
-
 # create CA key
 openssl genrsa -out ca.key 2048
 

@@ -1,4 +1,4 @@
-kubectl delete ns clients
+kubens clients
 rm kafka-client-truststore.p12 
 
 kubectl get secret my-cluster-cluster-ca-cert -n kafka -o yaml \
@@ -11,10 +11,6 @@ keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias ca \
 
 keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias kafka \
   -storepass $PASSWORD -keypass $PASSWORD -import -file kafka.crt -noprompt
-
-kubectl create ns clients
-
-kubens clients
 
 kubectl create secret generic kafka-client-truststore -n clients \
   --from-file=kafka-client-truststore.p12
