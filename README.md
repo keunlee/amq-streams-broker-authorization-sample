@@ -56,7 +56,7 @@ kubectl port-forward keycloak-69689547-fmn6h 8443:8443
 
 1) Login to the main Keycloak dashboard: `u:admin, p:admin`
 
-2) Select realm: `authz`
+2) Select realm: `kafka-authz`
 
 3) Select `User Federation` and then `ldap` from the provider drop down
 
