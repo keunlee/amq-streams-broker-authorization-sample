@@ -255,7 +255,7 @@ EOF
 
 using the oauth properites file we created, this will allow "fozzie" to consume messages on the topic "my-topic". 
 
-you should see messages the "kermit" produced earlier. hit ctrl-c to exit. 
+you should see messages that "kermit" produced earlier. hit ctrl-c to exit. 
 
 ```bash
 # fozzie consumes messages that kermit produced
