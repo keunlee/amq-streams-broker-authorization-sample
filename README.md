@@ -178,6 +178,8 @@ kubectl exec -it kafka-client-shell -- /bin/bash
 
 From this point on, you will be terminaled into the pod. Continue to follow the script:  
 
+Setup your TLS environment:
+
 ```bash
 # set up your TLS environment
 export PASSWORD=truststorepassword
@@ -185,14 +187,26 @@ export KAFKA_OPTS=" \
   -Djavax.net.ssl.trustStore=/opt/kafka/certificates/kafka-client-truststore.p12 \
   -Djavax.net.ssl.trustStorePassword=$PASSWORD \
   -Djavax.net.ssl.trustStoreType=PKCS12"
+```
 
+add your token endpoint to the environment: 
+
+```bash
 # add TOKEN ENDPOINT to env
 export TOKEN_ENDPOINT=https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
+```
 
+create JWT for the user "kermit"
+
+```bash
 # generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user kermit
 REFRESH_TOKEN=$(~/bin/oauth.sh -q kermit) # password: pass
 ~/bin/jwt.sh $REFRESH_TOKEN
+```
 
+generate oauth user properties for "kermit"
+
+```bash
 # generate oauth user properties - kermit
 cat > ~/kermit.properties << EOF
 security.protocol=SASL_SSL
@@ -203,14 +217,28 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
   oauth.token.endpoint.uri="https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token" ;
 sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthLoginCallbackHandler
 EOF
+```
 
+using the oauth properites file we created, this will allow "kermit" to produce messages on the topic "my-topic". 
+
+go ahead and generate some messages then hit ctrl-c to exit. 
+
+```bash
 # kermit produces messages on "my-topic"
 bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic --producer.config ~/kermit.properties
+```
 
-# generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user kermit
+generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user fozzie
+
+```bash
+# generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user fozzie
 REFRESH_TOKEN=$(~/bin/oauth.sh -q fozzie) # password: pass
 ~/bin/jwt.sh $REFRESH_TOKEN
+```
 
+generate oauth user properties for "fozzie"
+
+```bash
 # generate oauth user properties - fozzie
 cat > ~/fozzie.properties << EOF
 security.protocol=SASL_SSL
@@ -221,10 +249,17 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
   oauth.token.endpoint.uri="https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token" ;
 sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthLoginCallbackHandler
 EOF
+```
 
+using the oauth properites file we created, this will allow "fozzie" to consume messages on the topic "my-topic". 
+
+you should see messages the "kermit" produced earlier. hit ctrl-c to exit. 
+
+```bash
 # fozzie consumes messages that kermit produced
 bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic  --from-beginning --consumer.config ~/kermit.properties
 ```
+
 or follow along in the asciinema recording below: 
 
 [![asciicast](https://asciinema.org/a/vLmnBu6NagKAfdwnmoi7pkwDG.svg)](https://asciinema.org/a/vLmnBu6NagKAfdwnmoi7pkwDG)

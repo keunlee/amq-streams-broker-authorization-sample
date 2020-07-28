@@ -9,7 +9,6 @@ export PASSWORD=truststorepassword
 keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias ca \
   -storepass $PASSWORD -keypass $PASSWORD -import -file ca.crt -noprompt
 
-
 keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias kafka \
   -storepass $PASSWORD -keypass $PASSWORD -import -file kafka.crt -noprompt
 
