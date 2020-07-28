@@ -1,4 +1,4 @@
-# Strimzi + Keycloak + LDAP: Broker Authorization Use Case
+# Strimzi + Keycloak + LDAP: Broker Authorization Sample
 
 This use case demonstrates the following features: 
 
