@@ -162,7 +162,7 @@ For each of the use cases below we will define/identify the following in Keycloa
 
 ## Testing Authorization Rules for Admin Group Policy
 
-Follow the comments in the bash code below: 
+Follow the comments in the script below: 
 
 ```bash
 # switch to the `clients` namespace
@@ -176,7 +176,7 @@ kubectl get po
 kubectl exec -it kafka-client-shell -- /bin/bash
 ```
 
-From this point on, you will be terminaled into the pod: 
+From this point on, you will be terminaled into the pod. Continue to follow the script:  
 
 ```bash
 # set up your TLS environment
