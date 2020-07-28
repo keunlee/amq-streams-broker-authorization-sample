@@ -24,7 +24,7 @@ Make sure the following are installed and added to your PATH:
 
 The infrastructure to be created will consist of the following components: 
 
-- OpenLDAP - An LDAP Server for hosting LDAP groups and users
+- [OpenLDAP](https://www.openldap.org/) - An LDAP Server for managing LDAP groups and users
 - [Keycloak](https://www.keycloak.org/)/[Red Hat SSO](https://access.redhat.com/products/red-hat-single-sign-on) - The **upstream** version of Red Hat SSO
 - [Strimzi](https://strimzi.io/)/[Red Hat AMQ Streams](https://www.redhat.com/en/resources/amq-streams-datasheet) Kafka Cluster - The **upstream** version of AMQ Streams
 
