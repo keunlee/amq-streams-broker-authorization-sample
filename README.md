@@ -9,12 +9,12 @@ This use case demonstrates the following features:
 
 ## Prerequisites
 
-make sure you have an accessible kubernetes cluster: 
+Make sure you have an accessible kubernetes cluster: 
 
 - kubernetes cluster
   - Load Balancers must be deployed/enabled (i.e. metallb, traefik, etc.)
 
-make sure the following are installed added to your PATH: 
+Make sure the following are installed and added to your PATH: 
 
 - [kubectx/kubens](https://github.com/ahmetb/kubectx)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
@@ -24,11 +24,11 @@ make sure the following are installed added to your PATH:
 
 The infrastructure to be created will consist of the following components: 
 
-- OpenLDAP
-- Keycloak/RHSSO
-- Strimzi/AMQ Streams Kafka Cluster
+- OpenLDAP - An LDAP Server for hosting LDAP groups and users
+- Keycloak/RHSSO - The **upstream** version of Red Hat SSO
+- Strimzi/AMQ Streams Kafka Cluster - The **upstream** version of AMQ Streams
 
-NOTE: you will need to have the following namespaces available for use in this demo. 
+NOTE: You will need to have the following namespaces available for use in this demo. 
 
 ```
 openldap
@@ -36,7 +36,7 @@ kafka
 clients
 ```
 
-to install an entire ready made infrastructure: 
+To install an entire ready-made infrastructure: 
 
 ```bash
 ./setup.sh
