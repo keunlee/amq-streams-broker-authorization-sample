@@ -20,7 +20,7 @@ Make sure the following are installed and added to your PATH:
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3](https://helm.sh/docs/intro/install/)
 
-## Infastructure
+## Infrastructure
 
 The infrastructure to be created will consist of the following components: 
 
