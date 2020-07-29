@@ -6,7 +6,7 @@ kubens openldap
 
 helm install openldap-server -f openldap/values.yaml stable/openldap
 
-kubectl wait --for=condition=Available  deployment.apps/openldap-server
+kubectl wait --for=condition=Available  --timeout=180s deployment.apps/openldap-server
 
 openldap_pod=$(kubectl get po -l app=openldap -o custom-columns=:metadata.name)
 openldap_pod=`echo $openldap_pod | xargs`
