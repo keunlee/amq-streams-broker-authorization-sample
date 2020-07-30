@@ -94,9 +94,13 @@ and groups:
 
 The following use cases will demonstrate how to create various broker authorization resources, policies, and permissions and test them via kafka consumer/producer tools. 
 
+For each of the use cases below we will walk through in how to define them. 
+
 We will add authorization rules on the `Admin` LDAP group we synchronized earlier. Observing the users in the group we see the group has two users, `kermit` and `fozzie`. 
 
-For each of the use cases below we will define/identify the following in Keycloak. 
+To begin, select from the "Clients" tab, `kafka`, then select `Authorization`. 
+
+From there you will be able to add/update additional resources, policies, and permissions. 
 
 ## Admin Group Policy has full access to manage and affect consumer groups
 
