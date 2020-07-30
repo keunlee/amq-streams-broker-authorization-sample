@@ -70,6 +70,8 @@ Between other LDAP Providers, these configurations will differ.
 
 5) click `save`, then click `Synchronize all users`
 
+NOTE: all defined LDAP users in this example have password: `pass`
+
 ## Import LDAP Groups
 
 1) select `User Federation` and then `ldap` 
