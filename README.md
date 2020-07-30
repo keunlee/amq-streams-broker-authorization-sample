@@ -28,7 +28,7 @@ The infrastructure to be created will consist of the following components:
 - [Keycloak](https://www.keycloak.org/)/[Red Hat SSO](https://access.redhat.com/products/red-hat-single-sign-on) - The **upstream** version of Red Hat SSO
 - [Strimzi](https://strimzi.io/)/[Red Hat AMQ Streams](https://www.redhat.com/en/resources/amq-streams-datasheet) Kafka Cluster - The **upstream** version of AMQ Streams
 
-NOTE: You will need to have the following namespaces available for use in this demo. 
+> You will need to have the following namespaces available for use in this demo:
 
 ```
 openldap
