@@ -62,11 +62,7 @@ kubectl port-forward keycloak-69689547-fmn6h 8443:8443
 
 4) Match your screen configuration to the illustration below
 
-> We are using the following masked values in the form as shown in the illustration
-
-```
-Bind Credential: admin
-```
+> We are using the following masked values in the form as shown in the illustration: `Bind Credential: admin`
 
 ![](assets/keycloak-setup-001.png)
 
