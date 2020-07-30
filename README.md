@@ -62,7 +62,7 @@ kubectl port-forward keycloak-69689547-fmn6h 8443:8443
 
 4) Match your screen configuration to the illustration below
 
-NOTE: We are using the following masked values in the form as shown in the illustration
+> We are using the following masked values in the form as shown in the illustration
 
 ```
 Bind Credential: admin
@@ -76,7 +76,7 @@ Between other LDAP Providers, these configurations will differ.
 
 5) click `save`, then click `Synchronize all users`
 
-NOTE: All defined LDAP users in this example have password: `pass`
+> All defined LDAP users in this example have password: `pass`
 
 ## Import LDAP Groups
 
