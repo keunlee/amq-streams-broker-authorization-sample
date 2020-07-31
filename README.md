@@ -44,15 +44,33 @@ To install an entire ready-made infrastructure:
 
 # Importing LDAP Users and Groups into Keycloak
 
-## Add an LDAP Provider and Import Users
+## Open the Web UI
 
-You can access keycloak leveraging a proxy. one way to do to this is via port-forwarding your keycloak pod. 
+You can access the keycloak web ui a few different ways: 
+
+1) leveraging a port forward proxy
+
+one way to do to this is via port-forwarding your keycloak pod. 
 
 ```bash
 # example - accessible at: https://localhost:8443
 # obtain keycloak pod name. i.e. keycloak-69689547-fmn6h
 kubectl port-forward keycloak-69689547-fmn6h 8443:8443
 ```
+
+2) Go directly to the external address exposed by your load balancer service
+
+This will only work if you're cluster is installed on the box you are working from. Otherwise, you will need to proxy the address using port-forward or other means of forwarding (i.e. ngrok, etc.) 
+
+```bash
+# this will list your services
+# under external address, you should see an IP, 
+# provided you have enabled load balancers in your cluster
+# navigate to: https://<EXTERNAL-ADDRES>:8443
+kubectl get svc
+```
+
+## Add an LDAP Provider and Import Users
 
 1) Login to the main Keycloak dashboard: `u:admin, p:admin`
 
