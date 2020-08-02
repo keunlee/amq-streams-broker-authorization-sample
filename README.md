@@ -60,7 +60,7 @@ kubectl port-forward keycloak-69689547-fmn6h 8443:8443
 
 2) Go directly to the external address exposed by your load balancer service
 
-This will only work if you're cluster is installed on the box you are working from. Otherwise, you will need to proxy the address using port-forward or other means of forwarding (i.e. ngrok, etc.) 
+This may not work for you depending on your cluster setup. Otherwise, you will need to proxy the address using port-forward or other means of forwarding (i.e. ngrok, etc.) -- see first option.
 
 ```bash
 # this will list your services
