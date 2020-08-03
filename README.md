@@ -285,7 +285,7 @@ You should see messages that "kermit" produced earlier. hit ctrl-c to exit.
 
 ```bash
 # fozzie consumes messages that kermit produced
-bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic  --from-beginning --consumer.config ~/kermit.properties
+bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic  --from-beginning --consumer.config ~/fozzie.properties
 ```
 
 Follow along in the asciinema recording below: 
