@@ -18,7 +18,7 @@ kubectl create secret generic kafka-client-truststore -n clients \
 kubectl apply -n clients -f strimzi/kafka-client-authz-alt-2.5.0.yaml
 
 sleep 20
-kubectl wait --for=condition=Ready --timeout=180s pod/kafka-client-shell
+kubectl wait --for=condition=Ready --timeout=360s pod/kafka-client-shell
 
 kubectl exec -it kafka-client-shell -- /bin/bash -c "mkdir -p /home/kafka/bin"
 kubectl cp strimzi/oauth.sh kafka-client-shell:/home/kafka/bin
