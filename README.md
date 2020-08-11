@@ -33,6 +33,7 @@ The infrastructure to be created will consist of the following components:
 ```
 openldap
 kafka
+keycloak
 clients
 ```
 
