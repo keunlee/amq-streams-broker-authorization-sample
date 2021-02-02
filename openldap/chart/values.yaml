@@ -55,7 +55,7 @@ service:
 
   #loadBalancerIP: 
   #loadBalancerSourceRanges: []
-  type: LoadBalancer
+  type: ClusterIP
 
 # Default configuration for openldap as environment variables. These get injected directly in the container.
 # Use the env variables from https://github.com/osixia/docker-openldap#beginner-guide
@@ -82,15 +82,14 @@ env:
  LDAP_TLS_VERIFY_CLIENT: "never"
  LDAP_TLS_PROTOCOL_MIN: "3.0"
  LDAP_TLS_CIPHER_SUITE: "NORMAL"
- LDAP_ADMIN_PASSWORD: "admin"
 
   
 
 # Default Passwords to use, stored as a secret.
 # You can override these at install time with
 # helm install openldap --set openldap.adminPassword=<passwd>,openldap.configPassword=<passwd>
-adminPassword: admin
-configPassword: config
+adminPassword: Not@SecurePassw0rd
+configPassword: Not@SecurePassw0rd
 
 # Custom openldap configuration files used to override default settings
 # customLdifFiles:

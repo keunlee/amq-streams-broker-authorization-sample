@@ -4,11 +4,13 @@ kubectl delete ns openldap
 kubectl create ns openldap
 kubens openldap
 
-helm install openldap-server -f openldap/values.yaml stable/openldap
+helm install openldap-server -f openldap/values.yaml openldap/chart
 
-kubectl wait --for=condition=Available  --timeout=360s deployment.apps/openldap-server
+kubectl wait --for=condition=Ready  --timeout=360s pod/openldap-server-0
 
-openldap_pod=$(kubectl get po -l app=openldap -o custom-columns=:metadata.name)
+sleep 20
+
+openldap_pod=$(kubectl get po -l app=openldap-server -o custom-columns=:metadata.name)
 openldap_pod=`echo $openldap_pod | xargs`
 
 echo $openldap_pod
