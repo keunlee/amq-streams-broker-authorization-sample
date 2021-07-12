@@ -2,7 +2,6 @@ keycloak_pod=$(kubectl get po -l app=keycloak -o custom-columns=:metadata.name)
 keycloak_pod=`echo $keycloak_pod | xargs`
 echo $keycloak_pod
 
-kubectl cp keycloak/kafka-authz-realm.json $keycloak_pod:/tmp
 realm=kafka-authz
 
 kubectl exec -ti $keycloak_pod -- /bin/bash -c "cd ~/keycloak/bin; chmod +x kcadm.sh"
