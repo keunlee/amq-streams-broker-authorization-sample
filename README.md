@@ -19,6 +19,7 @@ Make sure the following are installed and added to your PATH:
 - [kubectx/kubens](https://github.com/ahmetb/kubectx)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [helm 3](https://helm.sh/docs/intro/install/)
+- openssl
 
 ## Infrastructure
 
