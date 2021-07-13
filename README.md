@@ -133,8 +133,6 @@ From there you will be able to add/update additional resources, policies, and pe
 
 **Resources**: `Group:*` 
 
-(exists, no need to create)
-
 **Form Fields**: 
 
 - Name/Description: `Admin Group Policy`
