@@ -7,7 +7,7 @@ This use case demonstrates the following features:
 - Keycloak and LDAP User/Group integration
 - Kafka Broker Authorization using Keycloak 
 
-## Prerequisites
+# Prerequisites
 
 Make sure you have an accessible kubernetes cluster: 
 
@@ -21,30 +21,11 @@ Make sure the following are installed and added to your PATH:
 - [helm 3](https://helm.sh/docs/intro/install/)
 - openssl
 
-## Infrastructure
+# I. [Local Infrastructure using K3D](docs/LOCAL_SETUP.md)
 
-The infrastructure to be created will consist of the following components: 
+# II. [Openshift 4.7.x Infrastructure](docs/OCP_SETUP.md)
 
-- [OpenLDAP](https://www.openldap.org/) - An LDAP Server for managing LDAP groups and users
-- [Keycloak](https://www.keycloak.org/)/[Red Hat SSO](https://access.redhat.com/products/red-hat-single-sign-on) - The **upstream** version of Red Hat SSO
-- [Strimzi](https://strimzi.io/)/[Red Hat AMQ Streams](https://www.redhat.com/en/resources/amq-streams-datasheet) Kafka Cluster - The **upstream** version of AMQ Streams
-
-> You will need to have the following namespaces available for use in this demo:
-
-```
-openldap
-kafka
-keycloak
-clients
-```
-
-To install an entire ready-made infrastructure: 
-
-```bash
-./setup.sh
-```
-
-# Importing LDAP Users and Groups into Keycloak
+# III. Importing LDAP Users and Groups into Keycloak
 
 ## Open the Web UI
 
@@ -115,7 +96,7 @@ and groups:
 
 ![](assets/keycloak-setup-005.png)
 
-# Broker Authorization
+# IV. Broker Authorization
 
 The following use cases will demonstrate how to create various broker authorization resources, policies, and permissions and test them via kafka consumer/producer tools. 
 
@@ -127,7 +108,7 @@ To begin, select from the "Clients" tab, `kafka`, then select `Authorization`.
 
 From there you will be able to add/update additional resources, policies, and permissions. 
 
-# Policies
+# V. Policies
 
 ## Admin Group Policy
 
@@ -141,7 +122,7 @@ From there you will be able to add/update additional resources, policies, and pe
 
 ![](assets/keycloak-setup-006.png)
 
-# Permissions 
+# VI. Permissions 
 
 ## Admin Group Policy has full access to manage and affect consumer groups
 
