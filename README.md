@@ -98,7 +98,8 @@ Between other LDAP Providers, these configurations will differ.
 
 1) select `User Federation` and then `ldap` 
 2) select `Mappers`
-3) click `create` and fill in with the following values: 
+3) click `create` and set name: `ldap-groups` and select mapper-type: `group-ldap-mapper`
+4) fill the form in with the following values: 
 
 ![](assets/keycloak-setup-003.png)
 
@@ -126,13 +127,15 @@ To begin, select from the "Clients" tab, `kafka`, then select `Authorization`.
 
 From there you will be able to add/update additional resources, policies, and permissions. 
 
-## Admin Group Policy has full access to manage and affect consumer groups
+# Policies
+
+## Admin Group Policy
 
 **Resources**: `Group:*` 
 
 (exists, no need to create)
 
-**Policies**: 
+**Form Fields**: 
 
 - Name/Description: `Admin Group Policy`
 - Groups: `Admin`
@@ -140,7 +143,9 @@ From there you will be able to add/update additional resources, policies, and pe
 
 ![](assets/keycloak-setup-006.png)
 
-**Permissions**: 
+# Permissions 
+
+## Admin Group Policy has full access to manage and affect consumer groups
 
 - Name/Description: `Admin Group Policy has full access to manage and affect consumer groups`
 - Type: `Resource`
@@ -160,7 +165,7 @@ From there you will be able to add/update additional resources, policies, and pe
 
 (exists, created in previous use case, no need to create)
 
-**Permissions**: 
+**Form Fields**: 
 
 - Name/Description: `Admin Group Policy has full access to manage and affect producer topics`
 - Type: `Resource`
@@ -180,7 +185,7 @@ From there you will be able to add/update additional resources, policies, and pe
 
 (exists, created in previous use case, no need to create)
 
-**Permissions**: 
+**Form Fields**: 
 
 - Name/Description: `Admin Group Policy has full access to config on any cluster`
 - Type: `Resource`
