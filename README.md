@@ -147,6 +147,12 @@ From there you will be able to add/update additional resources, policies, and pe
 
 ## Admin Group Policy has full access to manage and affect consumer groups
 
+**Resources**: `Group:*`
+
+**Policies**: `Admin Group Policy`
+
+**Form Fields**: 
+
 - Name/Description: `Admin Group Policy has full access to manage and affect consumer groups`
 - Type: `Resource`
 - Resource: `Group:*`
@@ -159,11 +165,7 @@ From there you will be able to add/update additional resources, policies, and pe
 
 **Resources**: `Topic:*`
 
-(exists, no need to create)
-
 **Policies**: `Admin Group Policy`
-
-(exists, created in previous use case, no need to create)
 
 **Form Fields**: 
 
@@ -179,11 +181,7 @@ From there you will be able to add/update additional resources, policies, and pe
 
 **Resources**: `Cluster:*`
 
-(exists, no need to create)
-
 **Policies**: `Admin Group Policy`
-
-(exists, created in previous use case, no need to create)
 
 **Form Fields**: 
 
