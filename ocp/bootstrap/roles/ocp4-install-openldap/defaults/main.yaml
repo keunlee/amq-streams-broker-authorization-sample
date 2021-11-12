@@ -1,13 +1,1 @@
 ocp4_openldap_namespace: openldap
-ocp4_openldap_root_password: admin
-ocp4_openldap_root_dn_suffix: "dc=example,dc=org"
-ocp4_openldap_root_dn_prefix: "cn=admin"
-
-
-#--param=OPENLDAP_ROOT_PASSWORD=admin --param=OPENLDAP_ROOT_DN_SUFFIX=dc=example,dc=org --param=OPENLDAP_ROOT_DN_PREFIX=cn=admin
-
-# stackrox_central_admin_password: stackrox
-# ocp4_demo_pipeline_namespace: cicd
-# acs_expected_crds:
-# - centrals.platform.stackrox.io
-# - securedclusters.platform.stackrox.io
