@@ -5,7 +5,7 @@
 
 - name: Install OpenLDAP
   shell: |
-    LDAP_DEPLOYMENT_NAME=$(oc get deployment -o jsonpath={.items..metadata.name})
+    LDAP_DEPLOYMENT_NAME=$(oc get deploymentconfig -o jsonpath={.items..metadata.name})
     if [ -z "$LDAP_DEPLOYMENT_NAME" ]
     then
       echo "Installing OpenLDAP"
@@ -20,25 +20,32 @@
 
 - name: Wait for OpenLDAP Deployment Pod to be ready
   shell: |
-    oc wait --for=condition=Ready pods --timeout=360s --selector deployment=openldap-server
+    oc wait --for=condition=Ready pods --timeout=360s --selector deploymentconfig=openldap-server
   register: openldap_pods_ready
 
 - debug: msg="{{ openldap_pods_ready.stdout }}"
     
 - name: Create LDAP Org, Groups, and Users
   shell: |
-    openldap_pod=$(oc get po -l deployment=openldap-server -o custom-columns=:metadata.name)
+    openldap_pod=$(oc get po -l deploymentconfig=openldap-server -o custom-columns=:metadata.name)
     openldap_pod=`echo $openldap_pod | xargs`
 
-    # copy file to openldap pod
-    oc cp "{{ role_path }}/files/00-ou.ldif" $openldap_pod:/tmp
-    oc cp "{{ role_path }}/files/01-groups.ldif" $openldap_pod:/tmp
-    oc cp "{{ role_path }}/files/02-users.ldif" $openldap_pod:/tmp
+    already_installed=$(oc exec -it $openldap_pod -- /bin/bash -c 'ldapsearch -x -H ldap://openldap-server.openldap:389 -b dc=example,dc=com -D "cn=Manager,dc=example,dc=com" -w admin' | grep 'numResponses: 13' | grep -q "numResponses: 13" && echo "true" || echo "false")
 
-    # import ldif entries
-    oc exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/00-ou.ldif'
-    oc exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/01-groups.ldif'
-    oc exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/02-users.ldif'
+    if [ $already_installed == "false" ]; then
+      # copy file to openldap pod
+      oc cp "{{ role_path }}/files/00-ou.ldif" $openldap_pod:/tmp
+      oc cp "{{ role_path }}/files/01-groups.ldif" $openldap_pod:/tmp
+      oc cp "{{ role_path }}/files/02-users.ldif" $openldap_pod:/tmp
+
+      # import ldif entries
+      oc exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/00-ou.ldif'
+      oc exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/01-groups.ldif'
+      oc exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/02-users.ldif'
+      oc exec -it $openldap_pod -- /bin/bash -c 'ldapsearch -x -H ldap://openldap-server.openldap:389 -b dc=example,dc=com -D "cn=Manager,dc=example,dc=com" -w admin'
+    else
+      echo "LDAP Org, Groups, and Users previous created. Skipping task."
+    fi
   register: openldap_org_ready
 
 - debug: msg="{{ openldap_org_ready.stdout }}"
