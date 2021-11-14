@@ -4,6 +4,9 @@
   connection: local
   tasks:
   
-  - name: 'Install OpenLDAP'
+  # - name: 'Install OpenLDAP'
+  #   include_role:
+  #     name: "ocp4-install-openldap"
+  - name: 'Install RH SSO'
     include_role:
-      name: "ocp4-install-openldap"
+      name: "ocp4-install-rh-sso"

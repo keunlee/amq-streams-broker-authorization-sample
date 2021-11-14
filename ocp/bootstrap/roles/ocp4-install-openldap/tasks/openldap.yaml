@@ -1,4 +1,4 @@
-- name: Create Namespaces
+- name: Create OpenLDAP Namespaces
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'namespaces.yaml.j2') }}"

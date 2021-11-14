@@ -1,0 +1,8 @@
+ocp4_keycloak_namespace: keycloak
+
+keycloak_expected_crds:
+- keycloaks.keycloak.org
+- keycloakbackups.keycloak.org
+- keycloakclients.keycloak.org
+- keycloakusers.keycloak.org
+# - keycloakrealms.keycloak.org
