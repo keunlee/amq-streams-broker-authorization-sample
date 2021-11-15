@@ -6,7 +6,7 @@
 - name: Install RH SSO Operator
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'subs-keycloak.yml.j2') }}"
+    definition: "{{ lookup('template', 'subs-keycloak.yaml.j2') }}"
 
 - name: Wait for RH SSO CRD to exist
   kubernetes.core.k8s_info:
@@ -18,3 +18,14 @@
   until: crds.resources|length > 0
   retries: 30
   delay: 10
+
+- name: Install RH SSO Keycloak Instance
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'keycloak.yaml.j2') }}"
+
+- name: Wait for Keycloak Pods to be ready
+  shell: |
+    oc wait --for=condition=Ready pods --timeout=360s --selector app=keycloak
+  register: keycloak_pods_ready
+

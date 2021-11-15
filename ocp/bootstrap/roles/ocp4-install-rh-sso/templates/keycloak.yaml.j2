@@ -1,0 +1,18 @@
+apiVersion: keycloak.org/v1alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+  labels:
+    app: sso
+  namespace: keycloak
+spec:
+  externalAccess:
+    enabled: true
+  keycloakDeploymentSpec:
+    experimental:
+      env:
+        - name: SSO_ADMIN_USERNAME
+          value: admin
+        - name: SSO_ADMIN_PASSWORD
+          value: admin
+  instances: 1
