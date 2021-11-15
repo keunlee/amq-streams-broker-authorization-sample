@@ -11,6 +11,8 @@ spec:
   keycloakDeploymentSpec:
     experimental:
       env:
+        - name: JAVA_OPTS_APPEND
+          value: '-Dkeycloak.profile.feature.upload_scripts=enabled'
         - name: SSO_ADMIN_USERNAME
           value: admin
         - name: SSO_ADMIN_PASSWORD
