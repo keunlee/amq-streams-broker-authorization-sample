@@ -24,8 +24,20 @@
     state: present
     definition: "{{ lookup('template', 'keycloak.yaml.j2') }}"
 
+- name: Pause for 20 seconds to let deployment resources to be added
+  pause:
+    seconds: 20
+
 - name: Wait for Keycloak Pods to be ready
   shell: |
     oc wait --for=condition=Ready pods --timeout=360s --selector app=keycloak
   register: keycloak_pods_ready
 
+- name: Update Keycloak Credentials Secret
+  shell: |
+    oc patch secret credential-keycloak --type='json' -p='[{"op" : "replace" ,"path" : "/data/ADMIN_PASSWORD" ,"value" : "YWRtaW4="}]'
+
+- name: Create Kafka-Authz Keycloak Realm
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'keycloak-realm.yaml.j2') }}"

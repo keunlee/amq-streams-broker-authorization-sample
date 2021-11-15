@@ -1,0 +1,99 @@
+{
+  "realm": "kafka-authz",
+  "accessTokenLifespan": 120,
+  "ssoSessionIdleTimeout": 864000,
+  "ssoSessionMaxLifespan": 864000,
+  "enabled": true,
+  "sslRequired": "external",
+  "roles": {
+    "realm": [
+    ],
+    "client": {
+      "team-a-client": [],
+      "team-b-client": [],
+      "kafka-cli": [],
+      "kafka": [
+        {
+          "name": "uma_protection",
+          "clientRole": true
+        }
+      ]
+    }
+  },
+  "groups" : [
+  ],
+  "users": [
+    {
+      "id": "223437e4-6ed9-4b2e-84a3-c780ca5fe319",
+      "createdTimestamp": 1595541053426,
+      "username": "service-account-kafka-broker",
+      "enabled": true,
+      "totp": false,
+      "emailVerified": false,
+      "serviceAccountClientId": "kafka-broker",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "notBefore": 0
+    },
+    {
+      "username" : "alice",
+      "enabled" : true,
+      "totp" : false,
+      "emailVerified" : true,
+      "firstName" : "Alice",
+      "email" : "alice@strimzi.io",
+      "credentials" : [ {
+        "type" : "password",
+        "secretData" : "{\"value\":\"KqABIiReBuRWbP4pBct3W067pNvYzeN7ILBV+8vT8nuF5cgYs2fdl2QikJT/7bGTW/PBXg6CYLwJQFYrBK9MWg==\",\"salt\":\"EPgscX9CQz7UnuZDNZxtMw==\"}",
+        "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+      } ],
+      "disableableCredentialTypes" : [ ],
+      "requiredActions" : [ ],
+      "realmRoles" : [ "offline_access", "uma_authorization" ],
+      "clientRoles" : {
+        "account" : [ "view-profile", "manage-account" ]
+      },
+      "groups" : [ "/ClusterManager Group" ]
+    }, {
+      "username" : "bob",
+      "enabled" : true,
+      "totp" : false,
+      "emailVerified" : true,
+      "firstName" : "Bob",
+      "email" : "bob@strimzi.io",
+      "credentials" : [ {
+        "type" : "password",
+        "secretData" : "{\"value\":\"QhK0uLsKuBDrMm9Z9XHvq4EungecFRnktPgutfjKtgVv2OTPd8D390RXFvJ8KGvqIF8pdoNxHYQyvDNNwMORpg==\",\"salt\":\"yxkgwEyTnCGLn42Yr9GxBQ==\"}",
+        "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+      } ],
+      "disableableCredentialTypes" : [ ],
+      "requiredActions" : [ ],
+      "realmRoles" : [ "offline_access", "uma_authorization" ],
+      "clientRoles" : {
+        "account" : [ "view-profile", "manage-account" ]
+      },
+      "groups" : [ "/ClusterManager-cluster2 Group" ]
+    },
+    {
+      "username" : "service-account-team-a-client",
+      "enabled" : true,
+      "serviceAccountClientId" : "team-a-client",
+      "realmRoles" : [ "offline_access", "Dev Team A" ],
+      "clientRoles" : {
+        "account" : [ "manage-account", "view-profile" ]
+      },
+      "groups" : [ ]
+    },
+    {
+      "username" : "service-account-team-b-client",
+      "enabled" : true,
+      "serviceAccountClientId" : "team-b-client",
+      "realmRoles" : [ "offline_access", "Dev Team B" ],
+      "clientRoles" : {
+        "account" : [ "manage-account", "view-profile" ]
+      },
+      "groups" : [ ]
+    }
+  ],
+  "clients": []
+}

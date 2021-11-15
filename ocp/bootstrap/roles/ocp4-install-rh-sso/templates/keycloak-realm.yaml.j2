@@ -1,0 +1,14 @@
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: kafka-zuthz-keycloakrealm
+  namespace: keycloak
+spec:
+  instanceSelector:
+    matchLabels:
+      app: sso
+  realm:
+    displayName: Kafka Authz
+    enabled: true
+    id: kafka-authz
+    realm: kafka-authz
