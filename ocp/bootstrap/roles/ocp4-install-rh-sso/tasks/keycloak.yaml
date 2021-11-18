@@ -19,25 +19,47 @@
   retries: 30
   delay: 10
 
+- name: Pause for 10 seconds to let deployment resources to be added
+  pause:
+    seconds: 10
+
+- name: Wait for RH SSO Operator to be available
+  shell: |
+    oc -n keycloak wait --for=condition=Ready pods --timeout=360s --selector name=rhsso-operator
+
 - name: Install RH SSO Keycloak Instance
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'keycloak.yaml.j2') }}"
 
-- name: Pause for 20 seconds to let deployment resources to be added
+- name: Pause for 120 seconds to let deployment resources to be added
   pause:
-    seconds: 20
+    seconds: 120
 
 - name: Wait for Keycloak Pods to be ready
   shell: |
-    oc wait --for=condition=Ready pods --timeout=360s --selector app=keycloak
+    oc -n keycloak wait --for=condition=Ready pods --timeout=360s --selector app=keycloak
   register: keycloak_pods_ready
 
 - name: Update Keycloak Credentials Secret
   shell: |
-    oc patch secret credential-keycloak --type='json' -p='[{"op" : "replace" ,"path" : "/data/ADMIN_PASSWORD" ,"value" : "YWRtaW4="}]'
+    oc -n keycloak patch secret credential-keycloak --type='json' -p='[{"op" : "replace" ,"path" : "/data/ADMIN_PASSWORD" ,"value" : "YWRtaW4="}]'
 
 - name: Create Kafka-Authz Keycloak Realm
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'keycloak-realm.yaml.j2') }}"
+
+- name: Import Keycloak resources
+  shell: |
+    keycloak_pod=keycloak-0
+    realm=kafka-authz
+
+    oc -n keycloak cp "{{ role_path }}/files/10-kafka-authz-realm.json" $keycloak_pod:/tmp
+    oc -n keycloak cp "{{ role_path }}/files/11-kafka-authz-realm.json" $keycloak_pod:/tmp
+    oc -n keycloak cp "{{ role_path }}/files/12-kafka-authz-realm.json" $keycloak_pod:/tmp
+
+    oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin"
+    oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $realm -s ifResourceExists=SKIP -o -f /tmp/10-kafka-authz-realm.json"
+    oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $realm -s ifResourceExists=SKIP -o -f /tmp/11-kafka-authz-realm.json"
+    oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $realm -s ifResourceExists=SKIP -o -f /tmp/12-kafka-authz-realm.json"
