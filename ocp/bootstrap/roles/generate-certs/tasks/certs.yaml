@@ -1,10 +1,23 @@
+- name: Register Output Path Directory
+  stat:
+    path: "{{ role_path }}/files/out"
+  register: output_dir
+
 - name: Create Output directory
   file:
     path: "{{ role_path }}/files/out"
     state: directory
+  when: not output_dir.stat.exists 
 
-- name: Test Certs
+- name: Register Files in Output Path
+  find:
+    paths: "{{ role_path }}/files/out"
+    file_type: directory
+  register: output_dir_files
+
+- name: Create Certs
   shell: |
+    echo "Create Certs"
     # create CA key
     openssl genrsa -out {{ role_path }}/files/out/ca.key 2048
 
@@ -25,3 +38,4 @@
     # Generate the final keycloak certificate, signed by CA
     openssl x509 -req -extfile {{ role_path }}/files/ssl.cnf -extensions SAN -in {{ role_path }}/files/out/keycloak.csr -CA {{ role_path }}/files/out/ca.crt \
       -CAkey {{ role_path }}/files/out/ca.key -CAcreateserial -out {{ role_path }}/files/out/keycloak.crt -days 365 -sha256
+  when: output_dir_files.examined == 0
