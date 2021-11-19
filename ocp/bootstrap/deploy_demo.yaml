@@ -12,6 +12,6 @@
   - name: 'Install RH SSO'
     include_role:
       name: "ocp4-install-rh-sso"
-  - name: 'Install RH AMQ Streams'
-    include_role:
-      name: "ocp4-install-rh-amqstreams"
+  # - name: 'Install RH AMQ Streams'
+  #   include_role:
+  #     name: "ocp4-install-rh-amqstreams"

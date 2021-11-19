@@ -29,7 +29,8 @@
 
 - name: Create CA certs
   shell: |
-    certs_path={{ playbook_dir }}/roles/generate-certs/files/out
+    CERTS_PATH={{ playbook_dir }}/roles/generate-certs/files/out
+    
 
     oc -n kafka create secret generic broker-oauth-secret --from-literal=secret=kafka-broker-secret
-    oc -n kafka create secret generic ca-truststore --from-file=$certs_path/ca.crt
+    oc -n kafka create secret generic ca-truststore --from-file=$CERTS_PATH/ca.crt
