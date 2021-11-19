@@ -63,3 +63,10 @@
     oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $realm -s ifResourceExists=SKIP -o -f /tmp/10-kafka-authz-realm.json"
     oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $realm -s ifResourceExists=SKIP -o -f /tmp/11-kafka-authz-realm.json"
     oc -n keycloak exec -ti $keycloak_pod -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $realm -s ifResourceExists=SKIP -o -f /tmp/12-kafka-authz-realm.json"
+
+- name: Update Keycloak TLS certs
+  shell: |
+    certs_path={{ playbook_dir }}/roles/generate-certs/files/out
+
+    oc -n keycloak delete secret sso-x509-https-secret
+    oc -n keycloak create secret tls sso-x509-https-secret --cert=$certs_path/keycloak.crt --key=$certs_path/keycloak.key

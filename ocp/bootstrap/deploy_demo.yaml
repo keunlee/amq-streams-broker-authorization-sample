@@ -3,9 +3,15 @@
   hosts: localhost
   connection: local
   tasks:
-  # - name: 'Install OpenLDAP'
-  #   include_role:
-  #     name: "ocp4-install-openldap"
+  - name: 'Create Certs'
+    include_role:
+      name: "generate-certs"
+  - name: 'Install OpenLDAP'
+    include_role:
+      name: "ocp4-install-openldap"
   - name: 'Install RH SSO'
     include_role:
       name: "ocp4-install-rh-sso"
+  - name: 'Install RH AMQ Streams'
+    include_role:
+      name: "ocp4-install-rh-amqstreams"

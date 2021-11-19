@@ -1,0 +1,61 @@
+kind: Kafka
+apiVersion: kafka.strimzi.io/v1beta2
+metadata:
+  name: my-cluster
+  namespace: kafka
+spec:
+  kafka:
+    version: 2.8.0
+    replicas: 1
+    listeners:
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: oauth
+          clientId: kafka-broker
+          clientSecret:
+            secretName: broker-oauth-secret
+            key: secret      
+          validIssuerUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz
+          jwksEndpointUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/certs
+          userNameClaim: preferred_username
+          tlsTrustedCertificates:
+          - secretName: ca-truststore
+            certificate: ca.crt
+          maxSecondsWithoutReauthentication: 3600
+    authorization:
+      type: keycloak
+      clientId: kafka
+      tokenEndpointUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
+      delegateToKafkaAcls: true
+      superUsers:
+      - User:service-account-kafka
+      - admin
+      - CN=Manager
+      tlsTrustedCertificates:
+      - secretName: ca-truststore
+        certificate: ca.crt
+    config:
+      offsets.topic.replication.factor: 1
+      transaction.state.log.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      log.message.format.version: '2.8'
+      inter.broker.protocol.version: '2.8'
+    storage:
+      type: jbod
+      volumes:
+      - id: 0
+        type: persistent-claim
+        size: 100Gi
+        deleteClaim: false
+  zookeeper:
+    replicas: 1
+    storage:
+      type: persistent-claim
+      size: 100Gi
+      deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}

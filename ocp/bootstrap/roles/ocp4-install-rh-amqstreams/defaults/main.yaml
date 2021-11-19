@@ -1,0 +1,13 @@
+ocp4_kafka_namespace: kafka
+
+amqstreams_expected_crds:
+- kafkas.kafka.strimzi.io
+- kafkatopics.kafka.strimzi.io
+- kafkabridges.kafka.strimzi.io
+- kafkaconnectors.kafka.strimzi.io
+- kafkaconnects2is.kafka.strimzi.io
+- kafkaconnects.kafka.strimzi.io
+- kafkamirrormaker2s.kafka.strimzi.io
+- kafkamirrormakers.kafka.strimzi.io
+- kafkarebalances.kafka.strimzi.io
+- kafkausers.kafka.strimzi.io

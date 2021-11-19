@@ -1,0 +1,27 @@
+- name: Create Output directory
+  file:
+    path: "{{ role_path }}/files/out"
+    state: directory
+
+- name: Test Certs
+  shell: |
+    # create CA key
+    openssl genrsa -out {{ role_path }}/files/out/ca.key 2048
+
+    # create CA certificate
+    openssl req -x509 -new -nodes -sha256 -days 3650 -subj "/CN=example.com" -key {{ role_path }}/files/out/ca.key -out {{ role_path }}/files/out/ca.crt
+
+    # create keycloak server private key
+    openssl genrsa -out {{ role_path }}/files/out/keycloak.key 2048
+
+    # create certificate-signing request
+    openssl req -new -sha256 \
+      -key {{ role_path }}/files/out/keycloak.key \
+      -subj "/CN=keycloak" \
+      -reqexts SAN \
+      -config {{ role_path }}/files/ssl.cnf \
+      -out {{ role_path }}/files/out/keycloak.csr
+
+    # Generate the final keycloak certificate, signed by CA
+    openssl x509 -req -extfile {{ role_path }}/files/ssl.cnf -extensions SAN -in {{ role_path }}/files/out/keycloak.csr -CA {{ role_path }}/files/out/ca.crt \
+      -CAkey {{ role_path }}/files/out/ca.key -CAcreateserial -out {{ role_path }}/files/out/keycloak.crt -days 365 -sha256
