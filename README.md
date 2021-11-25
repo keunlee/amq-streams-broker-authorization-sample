@@ -7,27 +7,13 @@ This use case demonstrates the following features:
 - Keycloak and LDAP User/Group integration
 - Kafka Broker Authorization using Keycloak 
 
-# Prerequisites
+# I. [Kubernetes Setup and Deployment](k8s/README.md)
 
-Make sure you have an accessible kubernetes cluster: 
-
-- kubernetes cluster
-  - Load Balancers must be deployed/enabled (i.e. metallb, traefik, etc.)
-
-Make sure the following are installed and added to your PATH: 
-
-- [kubectx/kubens](https://github.com/ahmetb/kubectx)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [helm 3](https://helm.sh/docs/intro/install/)
-- openssl
-
-# I. [Local Infrastructure using K3D](docs/LOCAL_SETUP.md)
-
-# II. [Openshift 4.7.x Infrastructure](docs/OCP_SETUP.md)
+# II. [Openshift 4.9.x Setup and Deployment](ocp/README.md)
 
 # III. Importing LDAP Users and Groups into Keycloak
 
-## Open the Web UI
+## Open the Keycloak Administration Dashboard
 
 You can access the keycloak web ui a few different ways: 
 
@@ -38,7 +24,7 @@ one way to do to this is via port-forwarding your keycloak pod.
 ```bash
 # example - accessible at: https://localhost:8443
 # obtain keycloak pod name. i.e. keycloak-69689547-fmn6h
-kubectl port-forward keycloak-69689547-fmn6h 8443:8443
+kubectl -n keycloak port-forward keycloak-69689547-fmn6h 8443:8443
 ```
 
 2) Go directly to the external address exposed by your load balancer service
@@ -50,7 +36,7 @@ This may not work for you depending on your cluster setup. Otherwise, you will n
 # under external address, you should see an IP, 
 # provided you have enabled load balancers in your cluster
 # navigate to: https://<EXTERNAL-ADDRES>:8443
-kubectl get svc
+kubectl -n keycloak get svc keycloak
 ```
 
 ## Add an LDAP Provider and Import Users
