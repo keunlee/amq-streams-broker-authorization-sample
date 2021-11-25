@@ -22,7 +22,7 @@ Do the following:
 
 # IV. [Kafka Broker Authorization Setup and Test](docs/KAFKA-OAUTH-TEST.md)
 
-# V. [Adding Additional Auth Resources](docs/KEYCLOAK-AUTH-RESOURCES.md)
+# V. [Adding Additional Auth Resources - Optional](docs/KEYCLOAK-AUTH-RESOURCES.md)
 
 # Sources
 
