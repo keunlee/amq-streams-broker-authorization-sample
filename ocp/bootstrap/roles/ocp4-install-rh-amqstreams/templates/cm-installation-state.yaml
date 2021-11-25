@@ -1,7 +1,10 @@
 apiVersion: v1
 data:
+  resources_imported: ""
+  certs_updated: ""
   secrets_created: ""
+  client_secrets_created: ""
 kind: ConfigMap
 metadata:
   name: cm-installation-state
-  namespace: keycloak
+  namespace: kafka

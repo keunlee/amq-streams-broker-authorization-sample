@@ -1,0 +1,61 @@
+- name: Get Keycloak Route Host
+  shell: |
+    oc -n keycloak get routes keycloak -o jsonpath='{ .spec.host }'
+  register: keycloak_route_result
+
+- name: Set Keycloak Route Host to Fact
+  set_fact:
+    keycloak_route: "{{ keycloak_route_result.stdout }}"
+
+- name: Register Output Path Directory
+  stat:
+    path: "{{ role_path }}/files/out"
+  register: output_dir
+
+- name: Create Output directory
+  file:
+    path: "{{ role_path }}/files/out"
+    state: directory
+  when: not output_dir.stat.exists 
+
+- name: Create Client certs
+  shell: |
+    CLIENT_SECRETS_CREATED=$(oc -n kafka get cm cm-installation-state -o jsonpath='{ .data.client_secrets_created }')
+    PASSWORD=truststorepassword
+
+    if [ -z "$CLIENT_SECRETS_CREATED" ];
+    then
+      echo "Creating Kafka client installation secrets"
+      
+      oc -n kafka get secret my-cluster-cluster-ca-cert -o yaml | grep ca.crt | awk '{print $2}' | base64 --di > {{ role_path }}/files/out/kafka.crt
+      
+      keytool -keystore {{ role_path }}/files/out/kafka-client-truststore.p12 -storetype PKCS12 -alias ca -storepass $PASSWORD -keypass $PASSWORD -import -file {{ role_path }}/files/out/sso.crt -noprompt
+      keytool -keystore {{ role_path }}/files/out/kafka-client-truststore.p12 -storetype PKCS12 -alias kafka -storepass $PASSWORD -keypass $PASSWORD -import -file {{ role_path }}/files/out/kafka.crt -noprompt
+      oc -n kafka create secret generic kafka-client-truststore --from-file={{ role_path }}/files/out/kafka-client-truststore.p12
+      
+      oc -n kafka patch cm cm-installation-state --type='json' -p='[{"op" : "replace" ,"path" : "/data/client_secrets_created" ,"value" : "true"}]' 
+    else
+      echo "Kafka client installation secrets already created"
+    fi
+  register: create_kafka_client_secrets_result
+
+- debug: msg="{{ create_kafka_client_secrets_result.stdout }}"
+
+- name: Install Kafka Client
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'kafka-client.yaml.j2') }}"
+
+- name: Pause for 10 seconds to let deployment resources to be added
+  pause:
+    seconds: 10
+
+- name: Wait for Kafka Client to be available
+  shell: |
+    oc -n kafka wait --for=condition=Ready --timeout=360s pod/kafka-client-shell
+
+- name: Copy oauth.sh and jwt.sh cli tools
+  shell: |
+    oc -n kafka exec -it kafka-client-shell -- /bin/bash -c "mkdir -p /home/kafka/bin"
+    oc -n kafka cp {{ role_path }}/files/oauth.sh kafka-client-shell:/home/kafka/bin
+    oc -n kafka cp {{ role_path }}/files/jwt.sh kafka-client-shell:/home/kafka/bin 

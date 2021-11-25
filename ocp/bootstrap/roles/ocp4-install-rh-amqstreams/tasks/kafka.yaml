@@ -3,6 +3,21 @@
     state: present
     definition: "{{ lookup('template', 'namespaces.yaml.j2') }}"
 
+- name: Create Installation State Config Mapping
+  shell: |
+    INSTALLATION_CM_PRESENT=$(oc -n kafka get cm cm-installation-state -o name)
+
+    if [ -z "$INSTALLATION_CM_PRESENT" ];
+    then
+      echo "Creating installation state config mapping"
+      oc -n kafka apply -f {{ role_path }}/templates/cm-installation-state.yaml
+    else
+      echo "installation state config mapping already exists"
+    fi
+  register: cm_installation_state_result
+
+- debug: msg="{{ cm_installation_state_result.stdout }}"
+
 - name: Install RH AMQ Streams Operator
   kubernetes.core.k8s:
     state: present
@@ -27,10 +42,50 @@
   shell: |
     oc -n kafka wait --for=condition=Ready pods --timeout=360s --selector name=amq-streams-cluster-operator
 
+- name: Get Keycloak Route Host
+  shell: |
+    oc -n keycloak get routes keycloak -o jsonpath='{ .spec.host }'
+  register: keycloak_route_result
+
+- name: Set Keycloak Route Host to Fact
+  set_fact:
+    keycloak_route: "{{ keycloak_route_result.stdout }}"
+
+- name: Register Output Path Directory
+  stat:
+    path: "{{ role_path }}/files/out"
+  register: output_dir
+
+- name: Create Output directory
+  file:
+    path: "{{ role_path }}/files/out"
+    state: directory
+  when: not output_dir.stat.exists 
+
 - name: Create CA certs
   shell: |
-    CERTS_PATH={{ playbook_dir }}/roles/generate-certs/files/out
-    
+    SECRETS_CREATED=$(oc -n kafka get cm cm-installation-state -o jsonpath='{ .data.secrets_created }')
 
-    oc -n kafka create secret generic broker-oauth-secret --from-literal=secret=kafka-broker-secret
-    oc -n kafka create secret generic ca-truststore --from-file=$CERTS_PATH/ca.crt
+    if [ -z "$SECRETS_CREATED" ];
+    then
+      echo "Creating Kafka installation secrets"
+
+      oc -n kafka create secret generic broker-oauth-secret --from-literal=secret=kafka-broker-secret
+
+      SSO_HOST={{ keycloak_route }}
+      SSO_HOST_PORT=$SSO_HOST:443
+      echo "Q" | openssl s_client -showcerts -connect $SSO_HOST_PORT 2>/dev/null | awk ' /BEGIN CERTIFICATE/,/END CERTIFICATE/ { print $0 } ' > {{ role_path }}/files/out/sso.crt
+      oc -n kafka create secret generic oauth-server-cert --from-file={{ role_path }}/files/out/sso.crt
+      
+      oc -n kafka patch cm cm-installation-state --type='json' -p='[{"op" : "replace" ,"path" : "/data/secrets_created" ,"value" : "true"}]' 
+    else
+      echo "Kafka installation secrets already created"
+    fi
+  register: create_kafka_secrets_result
+
+- debug: msg="{{ create_kafka_secrets_result.stdout }}"
+
+- name: install AMQ Streams Kafka Instance
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'kafka.yaml.j2') }}"

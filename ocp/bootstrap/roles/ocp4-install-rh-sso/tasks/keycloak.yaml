@@ -93,21 +93,21 @@
 
 - debug: msg="{{ import_keycloak_resources_result.stdout }}"
 
-- name: Update Keycloak TLS certs
-  shell: |
-    CERTS_UPDATED=$(oc -n keycloak get cm cm-installation-state -o jsonpath='{ .data.certs_updated }')
-    CERTS_PATH={{ playbook_dir }}/roles/generate-certs/files/out
-    if [ -z "$CERTS_UPDATED" ];
-    then
-      echo "Updating Keycloak certs"
+# - name: Update Keycloak TLS certs
+#   shell: |
+#     CERTS_UPDATED=$(oc -n keycloak get cm cm-installation-state -o jsonpath='{ .data.certs_updated }')
+#     CERTS_PATH={{ playbook_dir }}/roles/generate-certs/files/out
+#     if [ -z "$CERTS_UPDATED" ];
+#     then
+#       echo "Updating Keycloak certs"
 
-      oc -n keycloak delete secret sso-x509-https-secret
-      oc -n keycloak create secret tls sso-x509-https-secret --cert=$CERTS_PATH/keycloak.crt --key=$CERTS_PATH/keycloak.key
+#       oc -n keycloak delete secret sso-x509-https-secret
+#       oc -n keycloak create secret tls sso-x509-https-secret --cert=$CERTS_PATH/keycloak.crt --key=$CERTS_PATH/keycloak.key
 
-      oc -n keycloak patch cm cm-installation-state --type='json' -p='[{"op" : "replace" ,"path" : "/data/certs_updated" ,"value" : "true"}]' 
-    else
-      echo "Keycloak certs already updated"
-    fi
-  register: update_keycloak_certs_result
+#       oc -n keycloak patch cm cm-installation-state --type='json' -p='[{"op" : "replace" ,"path" : "/data/certs_updated" ,"value" : "true"}]' 
+#     else
+#       echo "Keycloak certs already updated"
+#     fi
+#   register: update_keycloak_certs_result
 
-- debug: msg="{{ update_keycloak_certs_result.stdout }}"
+# - debug: msg="{{ update_keycloak_certs_result.stdout }}"

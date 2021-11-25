@@ -1,2 +1,2 @@
 - import_tasks: kafka.yaml
-- import_tasks: client.yaml
+- import_tasks: kafka-client.yaml

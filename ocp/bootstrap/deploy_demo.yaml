@@ -3,9 +3,6 @@
   hosts: localhost
   connection: local
   tasks:
-  - name: 'Create Certs'
-    include_role:
-      name: "generate-certs"
   - name: 'Install OpenLDAP'
     include_role:
       name: "ocp4-install-openldap"
