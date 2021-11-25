@@ -538,7 +538,7 @@
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "resources": "[\"Group:x-*\"]",
+              "resources": "[\"Group:x_*\"]",
               "scopes": "[\"Describe\",\"Read\"]",
               "applyPolicies": "[\"Dev Team B\"]"
             }
@@ -549,7 +549,7 @@
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "resources": "[\"Group:a-*\"]",
+              "resources": "[\"Group:a_*\"]",
               "applyPolicies": "[\"Dev Team A\"]"
             }
           },
