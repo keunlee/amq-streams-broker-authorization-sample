@@ -6,27 +6,27 @@ You can access the keycloak web ui a few different ways.
 
 ### Kubernetes
 
-1) leveraging a port forward proxy
+#### Leveraging a Port Forward Proxy
 
-    one way to do to this is via port-forwarding your keycloak pod. 
+one way to do to this is via port-forwarding your keycloak pod. 
 
-    ```bash
-    # example - accessible at: https://localhost:8443
-    # obtain keycloak pod name. i.e. keycloak-69689547-fmn6h
-    kubectl -n keycloak port-forward keycloak-69689547-fmn6h 8443:8443
-    ```
+```bash
+# example - accessible at: https://localhost:8443
+# obtain keycloak pod name. i.e. keycloak-69689547-fmn6h
+kubectl -n keycloak port-forward keycloak-69689547-fmn6h 8443:8443
+```
 
-2) Go directly to the external address exposed by your load balancer service
+#### Go directly to the external address exposed by your load balancer service
 
-    This may not work for you depending on your cluster setup. Otherwise, you will need to proxy the address using port-forward or other means of forwarding (i.e. ngrok, etc.) -- see first option.
+This may not work for you depending on your cluster setup. Otherwise, you will need to proxy the address using port-forward or other means of forwarding (i.e. ngrok, etc.) -- see first option.
 
-    ```bash
-    # this will list your services
-    # under external address, you should see an IP, 
-    # provided you have enabled load balancers in your cluster
-    # navigate to: https://<EXTERNAL-ADDRES>:8443
-    kubectl -n keycloak get svc keycloak
-    ```
+```bash
+# this will list your services
+# under external address, you should see an IP, 
+# provided you have enabled load balancers in your cluster
+# navigate to: https://<EXTERNAL-ADDRES>:8443
+kubectl -n keycloak get svc keycloak
+```
 
 ### Openshift
 
