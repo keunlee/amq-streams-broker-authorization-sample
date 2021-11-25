@@ -12,6 +12,7 @@ Do the following:
 - Do either step I or step II (depending on the cluster type you are targeting - i.e. Vanilla Kubernetes orOpenshift)
 - Do step III
 - Do step IV
+- Do optional step V
 
 # I. [Kubernetes Setup and Deployment](k8s/README.md)
 
@@ -19,7 +20,9 @@ Do the following:
 
 # III. [LDAP Setup](docs/LDAP-SETUP.md)
 
-# IV. [Kafka Broker Authorization Setup and Test](docs/OAUTH-TEST.md)
+# IV. [Kafka Broker Authorization Setup and Test](docs/KAFKA-OAUTH-TEST.md)
+
+# V. [Adding Additional Auth Resources](docs/KEYCLOAK-AUTH-RESOURCES.md)
 
 # Sources
 
