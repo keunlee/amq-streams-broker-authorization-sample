@@ -9,7 +9,7 @@ This use case demonstrates the following features:
 
 Do the following: 
 
-- Do either step I or step II (depending on the cluster type you are targeting - i.e. Vanilla Kubernetes orOpenshift)
+- Do either step I or step II (depending on the cluster type you are targeting - i.e. Vanilla Kubernetes or Openshift)
 - Do step III
 - Do step IV
 - Do optional step V
