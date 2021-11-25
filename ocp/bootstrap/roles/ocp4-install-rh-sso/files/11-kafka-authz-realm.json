@@ -533,7 +533,7 @@
             }
           },
           {
-            "name": "Dev Team B can update consumer group offsets that start with x- on any cluster",
+            "name": "Dev Team B can update consumer group offsets that start with x_ on any cluster",
             "type": "scope",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
@@ -544,7 +544,7 @@
             }
           },
           {
-            "name": "Dev Team A can use consumer groups that start with a- on any cluster",
+            "name": "Dev Team A can use consumer groups that start with a_ on any cluster",
             "type": "resource",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
