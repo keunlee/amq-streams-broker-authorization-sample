@@ -37,3 +37,5 @@ Do the following:
 - https://strimzi.io/blog/2019/10/25/kafka-authentication-using-oauth-2.0/
 - https://github.com/strimzi/strimzi-kafka-oauth/blob/master/examples/README-authz.md
 - https://github.com/strimzi/strimzi-kafka-oauth#building
+- https://strimzi.io/docs/operators/0.26.0/using.html#proc-oauth-authorization-keycloak-example-deploy-kafka_str
+- https://strimzi.io/docs/operators/0.26.0/using.html#proc-oauth-authorization-keycloak-example-authentication_str
