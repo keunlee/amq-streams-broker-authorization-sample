@@ -15,7 +15,7 @@ keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias kafka \
 kubectl create secret generic kafka-client-truststore -n kafka \
   --from-file=kafka-client-truststore.p12
 
-kubectl apply -n kafka -f strimzi/kafka-client-authz-alt-2.5.0.yaml
+kubectl apply -n kafka -f strimzi/kafka-client-authz-alt-2.8.0.yaml
 
 sleep 20
 kubectl wait --for=condition=Ready --timeout=360s pod/kafka-client-shell

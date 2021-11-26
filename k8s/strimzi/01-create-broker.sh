@@ -5,7 +5,7 @@ export HISTCONTROL=ignorespace
 export BROKER_SECRET=kafka-broker-secret
 kubectl create secret generic broker-oauth-secret -n kafka --from-literal=secret=$BROKER_SECRET
 kubectl create secret generic ca-truststore --from-file=ca.crt -n kafka
-kubectl apply -f strimzi/kafka-persistent-single-oauth-authz-alt-2.5.0.yaml -n kafka
+kubectl apply -f strimzi/kafka-persistent-single-oauth-authz-alt-2.8.0.yaml -n kafka
 
 sleep 20
 kubectl wait --for=condition=Ready --timeout=360s pod/my-cluster-zookeeper-0

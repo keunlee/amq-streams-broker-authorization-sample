@@ -155,10 +155,10 @@
         "policyEnforcementMode": "ENFORCING",
         "resources": [
           {
-            "name": "Topic:a_*",
+            "name": "Topic:a-*",
             "type": "Topic",
             "ownerManagedAccess": false,
-            "displayName": "Topics that start with a_",
+            "displayName": "Topics that start with a-",
             "attributes": {},
             "uris": [],
             "scopes": [
@@ -208,10 +208,10 @@
             ]
           },
           {
-            "name": "Topic:x_*",
+            "name": "Topic:x-*",
             "type": "Topic",
             "ownerManagedAccess": false,
-            "displayName": "Topics that start with x_",
+            "displayName": "Topics that start with x-",
             "attributes": {},
             "uris": [],
             "scopes": [
@@ -314,7 +314,7 @@
             ]
           },
           {
-            "name": "kafka-cluster:cluster2,Topic:b_*",
+            "name": "kafka-cluster:cluster2,Topic:b-*",
             "type": "Topic",
             "ownerManagedAccess": false,
             "attributes": {},
@@ -491,43 +491,43 @@
             }
           },
           {
-            "name": "Dev Team A owns topics that start with a_ on any cluster",
+            "name": "Dev Team A owns topics that start with a- on any cluster",
             "type": "resource",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "resources": "[\"Topic:a_*\"]",
+              "resources": "[\"Topic:a-*\"]",
               "applyPolicies": "[\"Dev Team A\"]"
             }
           },
           {
-            "name": "Dev Team A can write to topics that start with x_ on any cluster",
+            "name": "Dev Team A can write to topics that start with x- on any cluster",
             "type": "scope",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "resources": "[\"Topic:x_*\"]",
+              "resources": "[\"Topic:x-*\"]",
               "scopes": "[\"Describe\",\"Write\"]",
               "applyPolicies": "[\"Dev Team A\"]"
             }
           },
           {
-            "name": "Dev Team B owns topics that start with b_ on cluster cluster2",
+            "name": "Dev Team B owns topics that start with b- on cluster cluster2",
             "type": "resource",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "resources": "[\"kafka-cluster:cluster2,Topic:b_*\"]",
+              "resources": "[\"kafka-cluster:cluster2,Topic:b-*\"]",
               "applyPolicies": "[\"Dev Team B\"]"
             }
           },
           {
-            "name": "Dev Team B can read from topics that start with x_ on any cluster",
+            "name": "Dev Team B can read from topics that start with x- on any cluster",
             "type": "scope",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "resources": "[\"Topic:x_*\"]",
+              "resources": "[\"Topic:x-*\"]",
               "scopes": "[\"Describe\",\"Read\"]",
               "applyPolicies": "[\"Dev Team B\"]"
             }

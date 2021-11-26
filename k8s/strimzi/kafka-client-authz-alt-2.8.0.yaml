@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: kafka-client-shell
-    image: strimzi/kafka:0.18.0-kafka-2.5.0
+    image: quay.io/strimzi/kafka:0.26.0-kafka-2.8.1
     command: ["/bin/bash"]
     args: [ "-c", 'for((i=0;;i+=1)); do echo "Up time: $i min" && sleep 60; done' ]
     env:

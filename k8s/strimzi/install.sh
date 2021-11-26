@@ -1,8 +1,5 @@
 kubens default
 kubectl delete ns kafka
-kubectl delete ns clients
-
-kubectl create ns clients
 kubectl create ns kafka
 kubens kafka
 

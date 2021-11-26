@@ -1,34 +1,30 @@
-apiVersion: kafka.strimzi.io/v1beta1
 kind: Kafka
+apiVersion: kafka.strimzi.io/v1beta2
 metadata:
   name: my-cluster
+  namespace: kafka
 spec:
   kafka:
-    version: 2.5.0
+    version: 2.8.0
     replicas: 1
     listeners:
-      plain: {}
-      # plain:
-      #   authentication:
-      #     type: oauth
-      #     validIssuerUri: http://keycloak:8080/auth/realms/kafka-authz
-      #     jwksEndpointUri: http://keycloak:8080/auth/realms/kafka-authz/protocol/openid-connect/certs
-      #     userNameClaim: preferred_username
-      #     maxSecondsWithoutReauthentication: 3600
-      #     jwksMinRefreshPauseSeconds: 5
-      tls:
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
         authentication:
           type: oauth
           clientId: kafka-broker
           clientSecret:
-            key: secret
             secretName: broker-oauth-secret
+            key: secret      
           validIssuerUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz
           jwksEndpointUri: https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/certs
           userNameClaim: preferred_username
           tlsTrustedCertificates:
           - secretName: ca-truststore
             certificate: ca.crt
+          maxSecondsWithoutReauthentication: 3600
     authorization:
       type: keycloak
       clientId: kafka
@@ -37,7 +33,7 @@ spec:
       superUsers:
       - User:service-account-kafka
       - admin
-      - CN=admin
+      - CN=Manager
       tlsTrustedCertificates:
       - secretName: ca-truststore
         certificate: ca.crt
@@ -45,7 +41,8 @@ spec:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
       transaction.state.log.min.isr: 1
-      log.message.format.version: "2.5"
+      log.message.format.version: '2.8'
+      inter.broker.protocol.version: '2.8'
     storage:
       type: jbod
       volumes:
