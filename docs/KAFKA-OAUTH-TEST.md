@@ -175,3 +175,7 @@ You should see messages that "kermit" produced earlier. hit ctrl-c to exit.
 # fozzie consumes messages that kermit produced
 bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic a-topic --group a_consumer_group_001  --from-beginning --consumer.config ~/fozzie.properties
 ```
+
+## Further Validation
+
+At this point, you can modify the rolemappings to the sample users we've used so far and validate their access after removing rolemappings from one or more of the users. 
