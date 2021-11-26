@@ -7,12 +7,12 @@ This use case demonstrates the following features:
 - Keycloak and LDAP User/Group integration
 - Kafka Broker Authorization using Keycloak 
 
-Do the following: 
+Following the steps below: 
 
-- Do either step I or step II (depending on the cluster type you are targeting - i.e. Vanilla Kubernetes or Openshift)
-- Do step III
-- Do step IV
-- Do optional step V
+- Step I or Step II (depending on the cluster type you are targeting - i.e. Vanilla Kubernetes or Openshift)
+- Step III
+- Step IV
+- Step V - OPTIONAL
 
 # I. [Kubernetes Setup and Deployment](k8s/README.md)
 
@@ -22,7 +22,7 @@ Do the following:
 
 # IV. [Kafka Broker Authorization Setup and Test](docs/KAFKA-OAUTH-TEST.md)
 
-# V. [Adding Additional Auth Resources - Optional](docs/KEYCLOAK-AUTH-RESOURCES.md)
+# V. [Adding Additional Auth Resources (OPTIONAL)](docs/KEYCLOAK-AUTH-RESOURCES.md)
 
 # Sources
 
