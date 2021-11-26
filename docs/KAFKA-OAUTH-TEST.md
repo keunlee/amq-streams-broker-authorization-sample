@@ -32,7 +32,7 @@ EOF
 
 ## Terminal into the `kafka-client-shell` Pod
 
-*Kubernetes*
+**Kubernetes**
 
 ```bash
 # switch to the `kafka` namespace
@@ -46,7 +46,7 @@ kubectl -n kafka get po
 kubectl exec -it kafka-client-shell -- /bin/bash
 ```
 
-*Openshift*
+**Openshift**
 
 Make a note of the RH SSO Openshift Route
 
@@ -86,14 +86,14 @@ export KAFKA_OPTS=" \
 
 Add your token endpoint to the environment: 
 
-*Kubernetes*
+**Kubernetes**
 
 ```bash
 # add TOKEN ENDPOINT to env
 export TOKEN_ENDPOINT=https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
 ```
 
-*Openshift*
+**Openshift**
 
 ```bash
 # IMPORTANT!! get value of RH SSO Route from previous steps and replace here:
