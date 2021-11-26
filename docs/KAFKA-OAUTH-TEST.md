@@ -1,6 +1,36 @@
 # Kafka Broker Authorization Setup and Test
 
-Follow the comments in the script below: 
+## Assign User Role Mappings in Keycloak/RH SSO
+
+Map "Kermit" to "Dev Team A"
+
+![](assets/keycloak-setup-012.png)
+
+Map "Fozzie" to "Dev Team A"
+
+![](assets/keycloak-setup-013.png)
+
+## Create a Kafka Topic
+
+```bash
+cat <<EOF | kubectl apply -f -
+kind: KafkaTopic
+apiVersion: kafka.strimzi.io/v1beta2
+metadata:
+  name: a-topic
+  labels:
+    strimzi.io/cluster: my-cluster
+  namespace: kafka
+spec:
+  partitions: 10
+  replicas: 3
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
+EOF
+```
+
+## Terminal into the `kafka-client-shell` Pod
 
 *Kubernetes*
 
@@ -38,6 +68,8 @@ oc -n kafka get po
 # terminal into the pod
 oc rsh -n kafka kafka-client-shell bin/bash
 ```
+
+## Kafka OAuth Tests
 
 From this point on, you will be terminaled into the pod. Continue to follow the script:  
 
@@ -99,13 +131,13 @@ sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthL
 EOF
 ```
 
-Using the oauth properties file we created, this will allow "kermit" to produce messages on the topic "my-topic". 
+Using the oauth properties file we created, this will allow "kermit" to produce messages on the topic "a-topic". 
 
 Go ahead and generate some messages then hit ctrl-c to exit. 
 
 ```bash
 # kermit produces messages on "my-topic"
-bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic --producer.config ~/kermit.properties
+bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap.kafka:9093 --topic a-topic --producer.config ~/kermit.properties
 ```
 
 Generate an oauth2 jwt and validate the token - make sure you're not getting back gibberish - user fozzie
@@ -135,11 +167,11 @@ sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthL
 EOF
 ```
 
-Using the oauth properites file we created, this will allow "fozzie" to consume messages on the topic "my-topic". 
+Using the oauth properites file we created, this will allow "fozzie" to consume messages on the topic "a-topic". 
 
 You should see messages that "kermit" produced earlier. hit ctrl-c to exit. 
 
 ```bash
 # fozzie consumes messages that kermit produced
-bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic my-topic  --from-beginning --consumer.config ~/fozzie.properties
+bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap.kafka:9093 --topic a-topic --group a_consumer_group_001  --from-beginning --consumer.config ~/fozzie.properties
 ```
