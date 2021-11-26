@@ -1,4 +1,4 @@
-kubens clients
+kubens kafka
 rm kafka-client-truststore.p12 
 
 kubectl get secret my-cluster-cluster-ca-cert -n kafka -o yaml \
@@ -12,10 +12,10 @@ keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias ca \
 keytool -keystore kafka-client-truststore.p12 -storetype PKCS12 -alias kafka \
   -storepass $PASSWORD -keypass $PASSWORD -import -file kafka.crt -noprompt
 
-kubectl create secret generic kafka-client-truststore -n clients \
+kubectl create secret generic kafka-client-truststore -n kafka \
   --from-file=kafka-client-truststore.p12
 
-kubectl apply -n clients -f strimzi/kafka-client-authz-alt-2.5.0.yaml
+kubectl apply -n kafka -f strimzi/kafka-client-authz-alt-2.5.0.yaml
 
 sleep 20
 kubectl wait --for=condition=Ready --timeout=360s pod/kafka-client-shell

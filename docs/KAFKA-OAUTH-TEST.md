@@ -3,11 +3,11 @@
 Follow the comments in the script below: 
 
 ```bash
-# switch to the `clients` namespace
-kubens clients
+# switch to the `kafka` namespace
+kubens kafka
 
 # check the running pods
-# you should see a single running pod: kafka-client-shell
+# you should see the following running pod: kafka-client-shell
 kubectl get po
 
 # terminal into the pod
@@ -43,6 +43,7 @@ REFRESH_TOKEN=$(~/bin/oauth.sh -q kermit) # password: pass
 
 ```bash
 # validate the token - make sure you're not getting back gibberish
+
 ~/bin/jwt.sh $REFRESH_TOKEN
 ```
 
