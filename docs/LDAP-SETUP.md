@@ -52,9 +52,15 @@ password: admin
 
 4) Match your screen configuration to the illustration below
 
-> We are using the following masked values in the form as shown in the illustration: `Bind Credential: admin`
+    > We are using the following masked values in the form as shown in the illustration: `Bind Credential: admin`
 
-![](assets/keycloak-setup-001.png)
+    *Keycloak on Kubernetes*
+
+    ![](assets/keycloak-setup-001.png)
+
+    *RH SSO on Openshift*
+
+    ![](assets/keycloak-setup-010.png)
 
 We are using OpenLDAP as our LDAP provider in this example, hence the screen configurations will be specific to configuring OpenLDAP. 
 
@@ -71,9 +77,15 @@ Between other LDAP Providers, these configurations will differ.
 3) click `create` and set name: `ldap-groups` and select mapper-type: `group-ldap-mapper`
 4) fill the form in with the following values: 
 
-![](assets/keycloak-setup-003.png)
+    *Keycloak on Kubernetes*
 
-4) click `save` and then `Sync LDAP Groups to Keycloak`
+    ![](assets/keycloak-setup-003.png)
+
+    *RH SSO on Openshift*
+
+    ![](assets/keycloak-setup-011.png)
+
+5) click `save` and then `Sync LDAP Groups to Keycloak`
 
 You can validate our LDAP users and groups by clicking on the `Users` and `Groups` tabs. 
 
