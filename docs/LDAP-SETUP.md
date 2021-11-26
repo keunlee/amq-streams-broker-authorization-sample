@@ -56,9 +56,21 @@ password: admin
 
     *Keycloak on Kubernetes*
 
+    Vendor: `Other`
+
+    Users DN: `ou=users,dc=example,dc=org`
+
+    Bind DN: `cn=admin,dc=example,dc=org`
+
     ![](assets/keycloak-setup-001.png)
 
     *RH SSO on Openshift*
+
+    Vendor: `Red Hat Directory Server`
+
+    Users DN: `ou=users,dc=example,dc=com`
+
+    Bind DN: `cn=Manager,dc=example,dc=com`
 
     ![](assets/keycloak-setup-010.png)
 
@@ -79,9 +91,13 @@ Between other LDAP Providers, these configurations will differ.
 
     *Keycloak on Kubernetes*
 
+    LDAP Groups DN: `ou=groups,dc=example,dc=org`
+
     ![](assets/keycloak-setup-003.png)
 
     *RH SSO on Openshift*
+
+    LDAP Groups DN: `ou=groups,dc=example,dc=com`
 
     ![](assets/keycloak-setup-011.png)
 
