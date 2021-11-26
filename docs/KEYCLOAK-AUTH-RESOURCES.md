@@ -1,8 +1,8 @@
 # Keycloak Authorization Resources
 
-The following use cases will demonstrate how to create various broker authorization resources, policies, and permissions and test them via kafka consumer/producer tools. 
+The following demonstrate how to create various broker authorization resources, policies, and permissions.
 
-For each of the use cases below we will walk through in how to define them. 
+For resources below we will walk through in how to define them. 
 
 We will add authorization rules on the `Admin` LDAP group we synchronized earlier. Observing the users in the group we see the group has two users, `kermit` and `fozzie`. 
 

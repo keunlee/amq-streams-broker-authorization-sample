@@ -2,16 +2,41 @@
 
 Follow the comments in the script below: 
 
+*Kubernetes*
+
 ```bash
 # switch to the `kafka` namespace
 kubens kafka
 
 # check the running pods
 # you should see the following running pod: kafka-client-shell
-kubectl get po
+kubectl -n kafka get po
 
 # terminal into the pod
 kubectl exec -it kafka-client-shell -- /bin/bash
+```
+
+*Openshift*
+
+Make a note of the RH SSO Openshift Route
+
+```bash
+# IMPORTANT!! Get RH SSO/Keycloak Openshift Route -- Make a note of this
+# i.e. keycloak-keycloak.apps.openshift-domain.com
+# you will need this value a few steps later
+oc -n keycloak get routes keycloak -o jsonpath='{ .spec.host }'
+```
+
+```bash
+# switch to the `kafka` namespace
+kubens kafka
+
+# check the running pods
+# you should see the following running pod: kafka-client-shell
+oc -n kafka get po
+
+# terminal into the pod
+oc rsh -n kafka kafka-client-shell bin/bash
 ```
 
 From this point on, you will be terminaled into the pod. Continue to follow the script:  
@@ -29,9 +54,21 @@ export KAFKA_OPTS=" \
 
 Add your token endpoint to the environment: 
 
+*Kubernetes*
+
 ```bash
 # add TOKEN ENDPOINT to env
 export TOKEN_ENDPOINT=https://keycloak.keycloak:8443/auth/realms/kafka-authz/protocol/openid-connect/token
+```
+
+*Openshift*
+
+```bash
+# IMPORTANT!! get value of RH SSO Route from previous steps and replace here:
+export RH_SSO_OCP_ROUTE=<keycloak-keycloak.apps.openshift-domain.com>
+
+# add TOKEN ENDPOINT to env
+export TOKEN_ENDPOINT=https://$RH_SSO_OCP_ROUTE/auth/realms/kafka-authz/protocol/openid-connect/token
 ```
 
 Create JWT for the user "kermit"
@@ -62,7 +99,7 @@ sasl.login.callback.handler.class=io.strimzi.kafka.oauth.client.JaasClientOauthL
 EOF
 ```
 
-Using the oauth properites file we created, this will allow "kermit" to produce messages on the topic "my-topic". 
+Using the oauth properties file we created, this will allow "kermit" to produce messages on the topic "my-topic". 
 
 Go ahead and generate some messages then hit ctrl-c to exit. 
 
