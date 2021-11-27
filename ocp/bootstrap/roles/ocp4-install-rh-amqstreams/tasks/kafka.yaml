@@ -34,9 +34,9 @@
   retries: 30
   delay: 10
 
-- name: Pause for 10 seconds to let deployment resources to be added
+- name: Pause for 20 seconds to let deployment resources to be added
   pause:
-    seconds: 10
+    seconds: 20
 
 - name: Wait for RH AMQ Streams Operator to be available
   shell: |
@@ -89,3 +89,11 @@
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'kafka.yaml.j2') }}"
+
+- name: Pause for 180 seconds to let deployment resources to be added
+  pause:
+    seconds: 180
+
+- name: Wait for Kafka pods
+  shell: |
+    oc -n kafka wait --for=condition=Ready pods --timeout=360s --selector strimzi.io/cluster=my-cluster
