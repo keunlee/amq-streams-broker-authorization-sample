@@ -89,13 +89,13 @@ Between other LDAP Providers, these configurations will differ.
 3) click `create` and set name: `ldap-groups` and select mapper-type: `group-ldap-mapper`
 4) fill the form in with the following values: 
 
-    *Keycloak on Kubernetes*
+    **Keycloak on Kubernetes**
 
     LDAP Groups DN: `ou=groups,dc=example,dc=org`
 
     ![](assets/keycloak-setup-003.png)
 
-    *RH SSO on Openshift*
+    **RH SSO on Openshift**
 
     LDAP Groups DN: `ou=groups,dc=example,dc=com`
 
