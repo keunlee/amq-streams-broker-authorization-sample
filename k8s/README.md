@@ -27,7 +27,6 @@ The infrastructure to be created will consist of the following components:
 openldap
 kafka
 keycloak
-clients
 ```
 
 To install an entire ready-made infrastructure: 
