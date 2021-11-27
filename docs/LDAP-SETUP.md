@@ -54,7 +54,7 @@ password: admin
 
     > We are using the following masked values in the form as shown in the illustration: `Bind Credential: admin`
 
-    *Keycloak on Kubernetes*
+    **Keycloak on Kubernetes**
 
     Vendor: `Other`
 
@@ -64,7 +64,7 @@ password: admin
 
     ![](assets/keycloak-setup-001.png)
 
-    *RH SSO on Openshift*
+    **RH SSO on Openshift**
 
     Vendor: `Red Hat Directory Server`
 
