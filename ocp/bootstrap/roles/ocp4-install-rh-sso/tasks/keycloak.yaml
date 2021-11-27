@@ -34,9 +34,9 @@
   retries: 30
   delay: 10
 
-- name: Pause for 10 seconds to let deployment resources to be added
+- name: Pause for 20 seconds to let deployment resources to be added
   pause:
-    seconds: 10
+    seconds: 20
 
 - name: Wait for RH SSO Operator to be available
   shell: |
