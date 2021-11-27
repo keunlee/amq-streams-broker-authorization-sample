@@ -27,7 +27,7 @@
     then
       echo "Creating Kafka client installation secrets"
       
-      oc -n kafka get secret my-cluster-cluster-ca-cert -o yaml | grep ca.crt | awk '{print $2}' | base64 --di > {{ role_path }}/files/out/kafka.crt
+      oc -n kafka get secret my-cluster-cluster-ca-cert -o yaml | grep ca.crt | awk '{print $2}' | base64 -di > {{ role_path }}/files/out/kafka.crt
       
       keytool -keystore {{ role_path }}/files/out/kafka-client-truststore.p12 -storetype PKCS12 -alias ca -storepass $PASSWORD -keypass $PASSWORD -import -file {{ role_path }}/files/out/sso.crt -noprompt
       keytool -keystore {{ role_path }}/files/out/kafka-client-truststore.p12 -storetype PKCS12 -alias kafka -storepass $PASSWORD -keypass $PASSWORD -import -file {{ role_path }}/files/out/kafka.crt -noprompt
