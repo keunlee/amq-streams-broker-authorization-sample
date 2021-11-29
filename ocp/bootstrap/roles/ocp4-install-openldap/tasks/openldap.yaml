@@ -9,7 +9,7 @@
     if [ -z "$LDAP_DEPLOYMENT_NAME" ];
     then
       echo "Installing OpenLDAP"
-      oc -n openldap new-app --docker-image=openshift/openldap-2441-centos7 --name=openldap-server
+      oc -n openldap new-app --as-deployment-config=true --docker-image=openshift/openldap-2441-centos7 --name=openldap-server
       sleep 20    
     else
       echo "OpenLDAP Already Deployed"
