@@ -74,7 +74,6 @@
     if [ -z "$RESOURCES_IMPORTED" ];
     then
       echo "Importing Keycloak resources"
-      echo "value 2: $RESOURCES_IMPORTED"
 
       oc -n keycloak cp "{{ role_path }}/files/10-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
       oc -n keycloak cp "{{ role_path }}/files/11-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
