@@ -50,12 +50,12 @@ sn: The Great
 uid: gonzo
 userPassword:: cGFzcw==
 
-dn: cn=Dr\, Bunsen,ou=users,dc=example,dc=org
+dn: uid=bunsen,ou=users,dc=example,dc=org
 objectClass: organizationalPerson
 objectClass: person
 objectClass: inetOrgPerson
 objectClass: top
-cn: Dr\, Bunsen
+cn: Bunsen
 sn: Honeydew
 uid: bunsen
 userPassword:: cGFzcw==
