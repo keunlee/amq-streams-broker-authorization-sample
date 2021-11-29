@@ -66,7 +66,7 @@ kubens kafka
 oc -n kafka get po
 
 # terminal into the pod
-oc rsh -n kafka kafka-client-shell bin/bash
+oc rsh -n kafka kafka-client-shell /bin/bash
 ```
 
 ## Kafka OAuth Tests
