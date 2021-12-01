@@ -17,10 +17,17 @@ cn: Admin
 uniqueMember: uid=kermit, ou=users,dc=example,dc=com
 uniqueMember: uid=fozzie, ou=users,dc=example,dc=com
 
-dn: cn=Sales,ou=groups,dc=example,dc=com
+dn: cn=TopicXRead,ou=groups,dc=example,dc=com
 objectClass: groupOfUniqueNames
 objectClass: top
-cn: Sales
-uniqueMember: uid=pepe, ou=users,dc=example,dc=com
+cn: TopicXRead
 uniqueMember: uid=gonzo, ou=users,dc=example,dc=com
-uniqueMember: uid=bunsen,ou=users,dc=example,dc=com
+uniqueMember: uid=pepe, ou=users,dc=example,dc=com
+
+dn: cn=TopicXWrite,ou=groups,dc=example,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: TopicXWrite
+uniqueMember: uid=bunsen, ou=users,dc=example,dc=com
+uniqueMember: uid=pepe, ou=users,dc=example,dc=com
+
