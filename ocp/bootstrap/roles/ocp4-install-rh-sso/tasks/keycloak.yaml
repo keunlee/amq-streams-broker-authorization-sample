@@ -79,7 +79,8 @@
       oc -n keycloak cp "{{ role_path }}/files/11-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
       oc -n keycloak cp "{{ role_path }}/files/12-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
 
-      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin"
+      oc -n keycloak expose pod keycloak-0 --port=8080 --target-port=8080 --name=keycloak-http
+      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh config credentials --server http://keycloak-http.keycloak:8080/auth --realm master --user admin --password admin"
       oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $REALM -s ifResourceExists=SKIP -o -f /tmp/10-kafka-authz-realm.json"
       oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $REALM -s ifResourceExists=SKIP -o -f /tmp/11-kafka-authz-realm.json"
       oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $REALM -s ifResourceExists=SKIP -o -f /tmp/12-kafka-authz-realm.json"
