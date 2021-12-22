@@ -31,3 +31,16 @@ cn: TopicXWrite
 uniqueMember: uid=bunsen, ou=users,dc=example,dc=com
 uniqueMember: uid=pepe, ou=users,dc=example,dc=com
 
+dn: cn=TopicAWrite,ou=groups,dc=example,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: TopicAWrite
+uniqueMember: uid=pepe,ou=users,dc=example,dc=com
+
+dn: cn=TopicARead,ou=groups,dc=example,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: TopicARead
+uniqueMember: uid=gonzo,ou=users,dc=example,dc=com
+
+

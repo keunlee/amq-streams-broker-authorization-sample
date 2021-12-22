@@ -19,6 +19,8 @@ echo $openldap_pod
 kubectl cp openldap/00-ou.ldif $openldap_pod:/root
 kubectl cp openldap/01-groups.ldif $openldap_pod:/root
 kubectl cp openldap/02-users.ldif $openldap_pod:/root
+kubectl cp openldap/add-pepe-to-read.ldif $openldap_pod:/root
+kubectl cp openldap/remove-pepe-from-read.ldif $openldap_pod:/root
 
 # import ldif entries
 kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/00-ou.ldif'

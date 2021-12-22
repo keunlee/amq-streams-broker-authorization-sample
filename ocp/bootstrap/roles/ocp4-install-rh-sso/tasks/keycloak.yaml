@@ -78,6 +78,7 @@
       oc -n keycloak cp "{{ role_path }}/files/10-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
       oc -n keycloak cp "{{ role_path }}/files/11-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
       oc -n keycloak cp "{{ role_path }}/files/12-kafka-authz-realm.json" $KEYCLOAK_POD:/tmp
+      oc -n keycloak cp "{{ role_path }}/files/20-kafka-authz-realm-kafka-client.json" $KEYCLOAK_POD:/tmp
 
       oc -n keycloak expose pod keycloak-0 --port=8080 --target-port=8080 --name=keycloak-http
       oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh config credentials --server http://keycloak-http.keycloak:8080/auth --realm master --user admin --password admin"
@@ -86,8 +87,26 @@
       oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $REALM -s ifResourceExists=SKIP -o -f /tmp/12-kafka-authz-realm.json"
 
       oc -n keycloak patch cm cm-installation-state --type='json' -p='[{"op" : "replace" ,"path" : "/data/resources_imported" ,"value" : "true"}]'  
+
+      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create components -r $REALM -s name=ldap -s providerId=ldap -s providerType=org.keycloak.storage.UserStorageProvider -s 'config.editMode=[\"WRITABLE\"]' -s 'config.syncRegistrations=[\"false\"]' -s 'config.vendor=[\"rhds\"]' -s 'config.usernameLDAPAttribute=[\"uid\"]' -s 'config.rdnLDAPAttribute=[\"uid\"]' -s 'config.uuidLDAPAttribute=[\"uid\"]' -s 'config.userObjectClasses=[\"inetOrgPerson\"]' -s 'config.connectionUrl=[\"ldap://openldap-server.openldap:389\"]'  -s 'config.usersDn=[\"ou=users,dc=example,dc=com\"]' -s 'config.authType=[\"simple\"]' -s 'config.bindDn=[\"cn=Manager,dc=example,dc=com\"]' -s 'config.bindCredential=[\"admin\"]'"
+
+      LDAP_COMPONENT=$(oc -n keycloak exec -it $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh get components -r $REALM -q type=org.keycloak.storage.UserStorageProvider"  | jq '.[] | .id'  | sed -e 's/^"//' -e 's/"$//')
+
+      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create -r $REALM user-storage/$LDAP_COMPONENT/sync?action=triggerFullSync"
+
+      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create components -r $REALM   -s name=ldap-groups -s providerId=group-ldap-mapper -s providerType=org.keycloak.storage.ldap.mappers.LDAPStorageMapper -s parentId=$LDAP_COMPONENT  -s 'config.\"groups.dn\"=[\"ou=groups,dc=example,dc=com\"]' -s 'config.\"group.name.ldap.attribute\"=[\"cn\"]' -s 'config.\"group.object.classes\"=[\"groupOfUniqueNames\"]' -s 'config.\"preserve.group.inheritance\"=[\"true\"]' -s 'config.\"membership.ldap.attribute\"=[\"uniqueMember\"]' -s 'config.\"membership.attribute.type\"=[\"DN\"]' -s 'config.\"groups.ldap.filter\"=[]' -s 'config.mode=[\"LDAP_ONLY\"]' -s 'config.\"user.roles.retrieve.strategy\"=[\"LOAD_GROUPS_BY_MEMBER_ATTRIBUTE\"]' -s 'config.membership=[\"memberOf\"]'"
+
+      LDAP_GROUP_COMPONENT=$(oc -n keycloak exec -it $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh get components -r $REALM  -q name=ldap-groups"  | jq '.[] | .id'  | sed -e 's/^"//' -e 's/"$//')
+ 
+      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create -r $REALM user-storage/$LDAP_COMPONENT/mappers/$LDAP_GROUP_COMPONENT/sync?direction=fedToKeycloak"
+
+      oc -n keycloak exec -ti $KEYCLOAK_POD -- /bin/bash -c "/opt/eap/bin/kcadm.sh create partialImport -r $REALM -s ifResourceExists=OVERWRITE -o -f /tmp/20-kafka-authz-realm-kafka-client.json"
+
+
     else
+
       echo "Keycloak resources already imported"
+
     fi
   register: import_keycloak_resources_result
 

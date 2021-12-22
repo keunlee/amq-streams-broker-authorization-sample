@@ -1,0 +1,697 @@
+{
+  "realm": "kafka-authz",
+  "clients": [
+  {
+    "clientId": "kafka",
+    "authorizationSettings" : {
+      "allowRemoteResourceManagement": true,
+      "policyEnforcementMode": "ENFORCING",
+      "resources": [
+        {
+          "name": "Cluster:*",
+          "type": "Cluster",
+          "ownerManagedAccess": false,
+          "attributes": {},
+          "_id": "2fd39e80-e340-4f88-be0e-bb5c6e9bc1a8",
+          "uris": []
+        },
+        {
+          "name": "kafka-cluster:cluster2,Topic:*",
+          "type": "Topic",
+          "ownerManagedAccess": false,
+          "displayName": "Any topic on cluster2",
+          "attributes": {},
+          "_id": "e3f6ceca-22f8-4ac9-90ff-b6ae32ad2d53",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Write"
+            },
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Create"
+            },
+            {
+              "name": "IdempotentWrite"
+            },
+            {
+              "name": "Alter"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        },
+        {
+          "name": "kafka-cluster:cluster2,Group:*",
+          "type": "Group",
+          "ownerManagedAccess": false,
+          "displayName": "Any group on cluster2",
+          "attributes": {},
+          "_id": "7ae72eb6-2aa9-4099-81bb-1def8f11d81e",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        },
+        {
+          "name": "kafka-cluster:cluster2,Cluster:*",
+          "type": "Cluster",
+          "ownerManagedAccess": false,
+          "displayName": "Cluster scope on cluster2",
+          "attributes": {},
+          "_id": "ed770657-c921-47ae-a329-998934f4bba6",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            },
+            {
+              "name": "ClusterAction"
+            }
+          ]
+        },
+        {
+          "name": "kafka-cluster:cluster2,Topic:b-*",
+          "type": "Topic",
+          "ownerManagedAccess": false,
+          "attributes": {},
+          "_id": "7538e5fa-3669-4084-ba4d-abadcd1294a6",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Write"
+            },
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Create"
+            },
+            {
+              "name": "Alter"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        },
+        {
+          "name": "Topic:*",
+          "type": "Topic",
+          "ownerManagedAccess": false,
+          "displayName": "Any topic",
+          "attributes": {},
+          "_id": "09045ba6-bcfe-4813-a188-3d14877a90df",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Write"
+            },
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Create"
+            },
+            {
+              "name": "Alter"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        },
+        {
+          "name": "Group:*",
+          "type": "Group",
+          "ownerManagedAccess": false,
+          "displayName": "Any group",
+          "attributes": {},
+          "_id": "f6ad67ac-1c09-48e9-8442-3fb1c01bea4c",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        },
+        {
+          "name": "Group:a_*",
+          "type": "Group",
+          "ownerManagedAccess": false,
+          "displayName": "Groups that start with a_",
+          "attributes": {},
+          "_id": "6bebff93-ac01-473b-a5ec-f744953639d1",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Read"
+            }
+          ]
+        },
+        {
+          "name": "Topic:x-*",
+          "type": "Topic",
+          "ownerManagedAccess": false,
+          "displayName": "Topics that start with x-",
+          "attributes": {},
+          "_id": "8e0618ce-3231-4e1b-9d90-db16b3840205",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Write"
+            },
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Create"
+            },
+            {
+              "name": "Alter"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        },
+        {
+          "name": "Group:x_*",
+          "type": "Group",
+          "ownerManagedAccess": false,
+          "displayName": "Consumer groups that start with x_",
+          "attributes": {},
+          "_id": "7ef98833-88ca-4e9d-81d2-cbe81e0a4b9d",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Read"
+            }
+          ]
+        },
+        {
+          "name": "Topic:a-*",
+          "type": "Topic",
+          "ownerManagedAccess": false,
+          "displayName": "Topics that start with a-",
+          "attributes": {},
+          "_id": "f7dd0d4e-46f3-4885-84b4-4165a5b2e4e9",
+          "uris": [],
+          "scopes": [
+            {
+              "name": "Write"
+            },
+            {
+              "name": "Describe"
+            },
+            {
+              "name": "Delete"
+            },
+            {
+              "name": "Create"
+            },
+            {
+              "name": "Alter"
+            },
+            {
+              "name": "Read"
+            },
+            {
+              "name": "DescribeConfigs"
+            },
+            {
+              "name": "AlterConfigs"
+            }
+          ]
+        }
+      ],
+      "policies": [
+        {
+          "id": "cd427465-304d-4937-903d-33672f81fd15",
+          "name": "ClusterManager of cluster2 Group",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/ClusterManager-cluster2 Group\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "a6371ac7-2208-49aa-99be-da09146c83bf",
+          "name": "ClusterManager Group",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/ClusterManager Group\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "bc7eb9c3-ee72-4e1e-ac2a-c72ff3e488b6",
+          "name": "Ops Team",
+          "type": "role",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "roles": "[{\"id\":\"Ops Team\",\"required\":true}]"
+          }
+        },
+        {
+          "id": "d307848a-9e39-4835-aacb-c2280527e7b4",
+          "name": "Dev Team B",
+          "type": "role",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "roles": "[{\"id\":\"Dev Team B\",\"required\":true}]"
+          }
+        },
+        {
+          "id": "b273c68c-cd00-46b6-a08e-e354986c0a94",
+          "name": "Default Policy",
+          "description": "A policy that grants access only for users within this realm",
+          "type": "js",
+          "logic": "POSITIVE",
+          "decisionStrategy": "AFFIRMATIVE",
+          "config": {
+            "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
+          }
+        },
+        {
+          "id": "265f2e16-eb1c-41e1-abfb-f08a8d1bbdd8",
+          "name": "Dev Team A",
+          "type": "role",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "roles": "[{\"id\":\"Dev Team A\",\"required\":true}]"
+          }
+        },
+        {
+          "id": "da5af45d-8ee0-48d6-8858-2a022d2b2f99",
+          "name": "ClusterManager Group has full access to cluster config",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Cluster:*\"]",
+            "applyPolicies": "[\"ClusterManager Group\"]"
+          }
+        },
+        {
+          "id": "3391feb3-0224-4f3c-86cb-6edd2b1125d3",
+          "name": "ClusterManager Group has full access to manage and affect topics",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:*\"]",
+            "applyPolicies": "[\"ClusterManager Group\"]"
+          }
+        },
+        {
+          "id": "f1f11d27-2e36-4549-bf10-608a40737905",
+          "name": "ClusterManager Group has full access to manage and affect groups",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Group:*\"]",
+            "applyPolicies": "[\"ClusterManager Group\"]"
+          }
+        },
+        {
+          "id": "aef7c2d9-1a8e-4c82-ae6f-c09a158c31db",
+          "name": "ClusterManager of cluster2 Group has full access to cluster config on cluster2",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"kafka-cluster:cluster2,Cluster:*\"]",
+            "applyPolicies": "[\"ClusterManager of cluster2 Group\"]"
+          }
+        },
+        {
+          "id": "38b851a6-cf34-4fb9-b88f-2fab1780d639",
+          "name": "ClusterManager of cluster2 Group has full access to consumer groups on cluster2",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"kafka-cluster:cluster2,Group:*\"]",
+            "applyPolicies": "[\"ClusterManager of cluster2 Group\"]"
+          }
+        },
+        {
+          "id": "c80c4b87-393e-4d79-a0a7-10053ca0f169",
+          "name": "ClusterManager of cluster2 Group has full access to topics on cluster2",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"kafka-cluster:cluster2,Topic:*\"]",
+            "applyPolicies": "[\"ClusterManager of cluster2 Group\"]"
+          }
+        },
+        {
+          "id": "ce358901-dd54-4579-9df3-d7e2b69f3467",
+          "name": "Dev Team A can use consumer groups that start with a_ on any cluster",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Group:a_*\"]",
+            "applyPolicies": "[\"Dev Team A\"]"
+          }
+        },
+        {
+          "id": "b1b43015-385f-400f-afe7-bbdb62e40625",
+          "name": "Dev Team B can update consumer group offsets that start with x_ on any cluster",
+          "type": "scope",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Group:x_*\"]",
+            "scopes": "[\"Describe\",\"Read\"]",
+            "applyPolicies": "[\"Dev Team B\"]"
+          }
+        },
+        {
+          "id": "4fd6ff10-b25e-4abf-ae01-6d9a587b7459",
+          "name": "Dev Team B can read from topics that start with x- on any cluster",
+          "type": "scope",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:x-*\"]",
+            "scopes": "[\"Describe\",\"Read\"]",
+            "applyPolicies": "[\"Dev Team B\"]"
+          }
+        },
+        {
+          "id": "e97051ea-c0aa-4f45-b29d-5249b9175b4f",
+          "name": "Dev Team B owns topics that start with b- on cluster cluster2",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"kafka-cluster:cluster2,Topic:b-*\"]",
+            "applyPolicies": "[\"Dev Team B\"]"
+          }
+        },
+        {
+          "id": "09dd9bb4-cd64-44a5-b2f2-5b261f4b32c5",
+          "name": "Dev Team A can write to topics that start with x- on any cluster",
+          "type": "scope",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:x-*\"]",
+            "scopes": "[\"Write\",\"Describe\"]",
+            "applyPolicies": "[\"Dev Team A\"]"
+          }
+        },
+        {
+          "id": "7d56bcb5-7259-414d-85ce-cb2d4c1a3167",
+          "name": "Dev Team A owns topics that start with a- on any cluster",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:a-*\"]",
+            "applyPolicies": "[\"Dev Team A\"]"
+          }
+        },
+        {
+          "id": "a2dc8d8e-afd1-4d65-9180-7e05ae080e29",
+          "name": "Admin Group Policy",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/Admin\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "f6bf5da6-83b7-425c-ac94-89f391d071c7",
+          "name": "Topic X  Read Group Access Policy",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/TopicXRead\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "b3eb6491-1390-4c97-9c10-05c4ea9bb413",
+          "name": "Topic X Write Group Access Policy",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/TopicXWrite\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "188b6a9b-e09d-4e28-ad10-dfa3cd244390",
+          "name": "Topic X Read Access to Topic Permission",
+          "type": "scope",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:x-*\"]",
+            "scopes": "[\"Describe\",\"Read\"]",
+            "applyPolicies": "[\"Topic X  Read Group Access Policy\"]"
+          }
+        },
+        {
+          "id": "86a632fd-28be-4701-9ba7-97d1d3c88ca5",
+          "name": "Topic X Read Access to Group Permission",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Group:x_*\"]",
+            "applyPolicies": "[\"Topic X  Read Group Access Policy\"]"
+          }
+        },
+        {
+          "id": "90974586-9512-46b2-89c3-98dbc9f30e64",
+          "name": "Topic X Write Permission",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:x-*\"]",
+            "applyPolicies": "[\"Topic X Write Group Access Policy\"]"
+          }
+        },
+        {
+          "id": "f6bf5da6-83b7-425c-ac94-89f391d071c1",
+          "name": "Topic A  Read Group Access Policy",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/TopicARead\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "b3eb6491-1390-4c97-9c10-05c4ea9bb411",
+          "name": "Topic A Write Group Access Policy",
+          "type": "group",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "groups": "[{\"path\":\"/TopicAWrite\",\"extendChildren\":false}]"
+          }
+        },
+        {
+          "id": "188b6a9b-e09d-4e28-ad10-dfa3cd244391",
+          "name": "Topic A Read Access to Topic Permission",
+          "type": "scope",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:a-*\"]",
+            "scopes": "[\"Describe\",\"Read\"]",
+            "applyPolicies": "[\"Topic A  Read Group Access Policy\"]"
+          }
+        },
+        {
+          "id": "86a632fd-28be-4701-9ba7-97d1d3c88ca1",
+          "name": "Topic A Read Access to Group Permission",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Group:a_*\"]",
+            "applyPolicies": "[\"Topic A  Read Group Access Policy\"]"
+          }
+        },
+        {
+          "id": "90974586-9512-46b2-89c3-98dbc9f30e61",
+          "name": "Topic A Write Permission",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:a-*\"]",
+            "applyPolicies": "[\"Topic A Write Group Access Policy\"]"
+          }
+        },
+        {
+          "id": "abd8a7d1-ce93-46e5-a03a-55201c33ca87",
+          "name": "Admin Group Policy has full access to manage and affect consumer groups",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Group:*\"]",
+            "applyPolicies": "[\"Admin Group Policy\"]"
+          }
+        },
+        {
+          "id": "606fd8c3-780f-4a55-a8d8-b15f66cd6ed0",
+          "name": "Admin Group Policy has full access to manage and affect producer topics",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Topic:*\"]",
+            "applyPolicies": "[\"Admin Group Policy\"]"
+          }
+        },
+        {
+          "id": "5ab2bb8d-be63-4692-b41e-15032e8e3d40",
+          "name": "Admin Group Policy has full access to config on any cluster",
+          "type": "resource",
+          "logic": "POSITIVE",
+          "decisionStrategy": "UNANIMOUS",
+          "config": {
+            "resources": "[\"Cluster:*\"]",
+            "applyPolicies": "[\"Admin Group Policy\"]"
+          }
+        }
+      ],
+      "scopes": [
+        {
+          "id": "649130af-ff0f-49b6-8ac9-fd2c8771e53b",
+          "name": "IdempotentWrite"
+        },
+        {
+          "id": "640aebe7-2006-4170-89dc-2afaef5cbe09",
+          "name": "AlterConfigs"
+        },
+        {
+          "id": "c1421579-ed9a-43a3-800f-e30f27b5fc05",
+          "name": "DescribeConfigs"
+        },
+        {
+          "id": "481e9c7b-3727-4cd0-a3da-481fa119e48a",
+          "name": "ClusterAction"
+        },
+        {
+          "id": "c62f5249-45b8-4259-8d3c-047ad38f3757",
+          "name": "Describe"
+        },
+        {
+          "id": "8dae0371-154a-4b16-a342-2bfcaa917fe3",
+          "name": "Alter"
+        },
+        {
+          "id": "3d70b7b1-f6b0-4ebd-ad35-eb12c3496370",
+          "name": "Delete"
+        },
+        {
+          "id": "076b4eb8-b86b-4e6f-b6a1-46524408a2d1",
+          "name": "Write"
+        },
+        {
+          "id": "a69a4778-96d4-4a9e-930a-047066a642ba",
+          "name": "Read"
+        },
+        {
+          "id": "b6bfa649-ec2a-4a2f-bbf5-d77817336c61",
+          "name": "Create"
+        }
+      ],
+      "decisionStrategy": "AFFIRMATIVE"
+    }
+  }
+]
+}

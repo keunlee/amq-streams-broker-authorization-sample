@@ -37,6 +37,8 @@
       oc -n openldap cp "{{ role_path }}/files/00-ou.ldif" $OPENLDAP_POD:/tmp
       oc -n openldap cp "{{ role_path }}/files/01-groups.ldif" $OPENLDAP_POD:/tmp
       oc -n openldap cp "{{ role_path }}/files/02-users.ldif" $OPENLDAP_POD:/tmp
+      oc -n openldap cp "{{ role_path }}/files/add-pepe-to-read.ldif" $OPENLDAP_POD:/tmp
+      oc -n openldap cp "{{ role_path }}/files/remove-pepe-from-read.ldif" $OPENLDAP_POD:/tmp
 
       # import ldif entries
       oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/00-ou.ldif'
