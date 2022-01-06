@@ -22,6 +22,6 @@ Following the steps below:
 
 # IV. [Kafka Broker Authorization Setup and Test](docs/KAFKA-OAUTH-TEST.md)
 
-# V. [Adding Additional Auth Resources (OPTIONAL)](docs/KEYCLOAK-AUTH-RESOURCES.md)
+# V. [Test Authorization(OPTIONAL)](docs/LDAP-KEYCLOAK-KAFKA.md)
 
 # [Sources](docs/SOURCES.md)

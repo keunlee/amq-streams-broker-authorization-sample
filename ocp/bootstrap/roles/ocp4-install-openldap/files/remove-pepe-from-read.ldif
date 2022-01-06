@@ -1,0 +1,5 @@
+dn: cn=TopicARead,ou=groups,dc=example,dc=com
+changetype: modify
+delete: uniqueMember
+uniqueMember: uid=pepe,ou=users,dc=example,dc=com
+
