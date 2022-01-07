@@ -72,6 +72,9 @@
 
       oc -n kafka create secret generic broker-oauth-secret --from-literal=secret=kafka-broker-secret
 
+      ###
+      # see: https://strimzi.io/docs/operators/latest/full/using.html#proc-oauth-authorization-keycloak-example-deploy-kafka_str
+      ###
       SSO_HOST={{ keycloak_route }}
       SSO_HOST_PORT=$SSO_HOST:443
       echo "Q" | openssl s_client -showcerts -connect $SSO_HOST_PORT 2>/dev/null | awk ' /BEGIN CERTIFICATE/,/END CERTIFICATE/ { print $0 } ' > {{ role_path }}/files/out/sso.crt
