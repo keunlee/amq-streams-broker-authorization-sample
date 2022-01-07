@@ -7,8 +7,6 @@ This use case demonstrates the following features:
 - Keycloak and LDAP User/Group integration
 - Kafka Broker Authorization using Keycloak 
 
-[References](docs/SOURCES.md)
-
 # I. Setup and Deploy
 
 ## [Kubernetes](k8s/README.md)
@@ -20,3 +18,5 @@ This use case demonstrates the following features:
 ## [Kafka Broker Authorization - Part I](docs/KAFKA-OAUTH-TEST.md)
 
 ## [Kafka Broker Authorization - Part II](docs/LDAP-KEYCLOAK-KAFKA.md)
+
+[References](docs/SOURCES.md)
