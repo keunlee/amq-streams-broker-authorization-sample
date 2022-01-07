@@ -20,5 +20,3 @@ This use case demonstrates the following features:
 ## [Kafka Broker Authorization - Part I](docs/KAFKA-OAUTH-TEST.md)
 
 ## [Kafka Broker Authorization - Part II](docs/LDAP-KEYCLOAK-KAFKA.md)
-
-# III. References
