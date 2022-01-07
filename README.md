@@ -14,14 +14,16 @@ Following the steps below:
 - Step IV
 - Step V - OPTIONAL
 
-# I. [Kubernetes Setup and Deployment](k8s/README.md)
+# I. Setup and Deploy
 
-# II. [Openshift 4.9.x Setup and Deployment](ocp/README.md)
+## [Kubernetes](k8s/README.md)
 
-# III. [LDAP Setup](docs/LDAP-SETUP.md)
+## [Openshift 4.9.x](ocp/README.md)
 
-# IV. [Kafka Broker Authorization Setup and Test](docs/KAFKA-OAUTH-TEST.md)
+# II. Broker Authorization Setup and Test
 
-# V. [Test Authorization(OPTIONAL)](docs/LDAP-KEYCLOAK-KAFKA.md)
+## [Kafka Broker Authorization - Part I](docs/KAFKA-OAUTH-TEST.md)
+
+## [Kafka Broker Authorization - Part II](docs/LDAP-KEYCLOAK-KAFKA.md)
 
 # [Sources](docs/SOURCES.md)
