@@ -12,6 +12,7 @@ The following are necessary to proceed with the setup of this demonstration:
     - [openshift client tools - oc - >= v4.6](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/)
     - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
     - [python client for openshift - requires python](https://pypi.org/project/openshift/)
+    - [jq](https://stedolan.github.io/jq/)
     - python
     - openssl
     - keytool

@@ -10,6 +10,7 @@ The following are necessary to proceed with the setup of this demonstration:
     - [kubectx/kubens](https://github.com/ahmetb/kubectx)
     - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
     - [helm 3](https://helm.sh/docs/intro/install/)
+    - [jq](https://stedolan.github.io/jq/)
     - openssl
     - keytool
 
