@@ -1,3 +1,8 @@
+- name: Update 'deployer' service account privileges
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'deployer-rolebinding.yaml.j2') }}"
+
 - name: Create OpenLDAP Namespaces
   kubernetes.core.k8s:
     state: present
