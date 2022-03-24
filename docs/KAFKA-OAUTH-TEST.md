@@ -59,7 +59,7 @@ oc -n keycloak get routes keycloak -o jsonpath='{ .spec.host }'
 
 ```bash
 # switch to the `kafka` namespace
-kubens kafka
+oc project kafka
 
 # check the running pods
 # you should see the following running pod: kafka-client-shell
