@@ -7,6 +7,8 @@ This use case demonstrates the following features:
 - Keycloak and LDAP User/Group integration
 - Kafka Broker Authorization using Keycloak 
 
+![amq-streams-authorization](https://user-images.githubusercontent.com/61749/160758676-40e01d1f-3bdf-409b-a873-b0873771c993.png)
+
 # I. Setup and Deploy
 
 ## [Kubernetes](k8s/README.md)
