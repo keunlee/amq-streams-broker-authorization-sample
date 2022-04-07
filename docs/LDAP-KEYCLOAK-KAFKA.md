@@ -42,7 +42,7 @@ OPENLDAP_POD=$(oc -n openldap get po -l deploymentconfig=openldap-server -o cust
 OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
 # Add Pepe to TopicARead Group in OpenLDAP
-oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /root/add-pepe-to-read.ldif'
+oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/add-pepe-to-read.ldif'
 ```
 
 ## Refresh Keycloak
@@ -77,7 +77,7 @@ OPENLDAP_POD=$(oc -n openldap get po -l deploymentconfig=openldap-server -o cust
 OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
 # Add Pepe to TopicARead Group in OpenLDAP
-oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /root/remove-pepe-from-read.ldif'
+oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/remove-pepe-from-read.ldif'
 ```
 
 ## Refresh Keycloak
