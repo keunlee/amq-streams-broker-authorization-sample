@@ -4,27 +4,28 @@ kubectl delete ns openldap
 kubectl create ns openldap
 kubens openldap
 
-helm install openldap-server -f openldap/values.yaml openldap/chart
+helm repo add helm-openldap https://jp-gouin.github.io/helm-openldap
+helm install --set replicaCount=1,adminPassword=admin openldap-server helm-openldap/openldap-stack-ha 
 
-kubectl wait --for=condition=Ready  --timeout=360s pod/openldap-server-0
+kubectl wait --for=condition=Ready  --timeout=360s pod/openldap-server-openldap-stack-ha-0
 
 sleep 20
 
-openldap_pod=$(kubectl get po -l app=openldap-server -o custom-columns=:metadata.name)
-openldap_pod=`echo $openldap_pod | xargs`
+OPENLAP_POD=$(kubectl get po -l app=openldap-server-openldap-stack-ha -o custom-columns=:metadata.name)
+OPENLAP_POD=`echo $OPENLAP_POD | xargs`
 
-echo $openldap_pod
+echo $OPENLAP_POD
 
 # copy files to openldap pod
-kubectl cp openldap/00-ou.ldif $openldap_pod:/root
-kubectl cp openldap/01-groups.ldif $openldap_pod:/root
-kubectl cp openldap/02-users.ldif $openldap_pod:/root
-kubectl cp openldap/add-pepe-to-read.ldif $openldap_pod:/root
-kubectl cp openldap/remove-pepe-from-read.ldif $openldap_pod:/root
+kubectl cp openldap/00-ou.ldif $OPENLAP_POD:/root
+kubectl cp openldap/01-groups.ldif $OPENLAP_POD:/root
+kubectl cp openldap/02-users.ldif $OPENLAP_POD:/root
+kubectl cp openldap/add-pepe-to-read.ldif $OPENLAP_POD:/root
+kubectl cp openldap/remove-pepe-from-read.ldif $OPENLAP_POD:/root
 
 # import ldif entries
-kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/00-ou.ldif'
-kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/01-groups.ldif'
-kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/02-users.ldif'
-kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapsearch -x -H ldap://openldap-server.openldap:389 -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w admin'
+kubectl exec -it $OPENLAP_POD -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server-openldap-stack-ha.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/00-ou.ldif'
+kubectl exec -it $OPENLAP_POD -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server-openldap-stack-ha.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/01-groups.ldif'
+kubectl exec -it $OPENLAP_POD -- /bin/bash -c 'ldapadd -x -H ldap://openldap-server-openldap-stack-ha.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f ~/02-users.ldif'
+kubectl exec -it $OPENLAP_POD -- /bin/bash -c 'ldapsearch -x -H ldap://openldap-server-openldap-stack-ha.openldap:389 -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w admin'
 

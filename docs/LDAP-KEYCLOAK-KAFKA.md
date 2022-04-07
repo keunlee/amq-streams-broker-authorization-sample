@@ -27,17 +27,14 @@ Processed a total of 0 messages
 
 ```bash
 # Get Openldap POD
-openldap_pod=$(kubectl get po -l app=openldap-server -o custom-columns=:metadata.name)
-openldap_pod=`echo $openldap_pod | xargs`
+OPENLDAP_POD=$(kubectl -n openldap get po -l app=openldap-server-openldap-stack-ha -o custom-columns=:metadata.name)
+OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
 # Add Pepe to TopicARead Group in OpenLDAP
-kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/add-pepe-to-read.ldif'
-
-
+kubectl -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server-openldap-stack-ha.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f /root/add-pepe-to-read.ldif'
 ```
 
 **Openshift**
-
 
 ```bash
 # Get Openldap POD
@@ -45,8 +42,7 @@ OPENLDAP_POD=$(oc -n openldap get po -l deploymentconfig=openldap-server -o cust
 OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
 # Add Pepe to TopicARead Group in OpenLDAP
-oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/add-pepe-to-read.ldif'
-
+oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /root/add-pepe-to-read.ldif'
 ```
 
 ## Refresh Keycloak
@@ -54,7 +50,6 @@ oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://o
 Click "Synchronize all users" button under User Federation -> ldap
 
 ![](assets/keycloak-setup-015.png)
-
 
 ## Pepe to read from a-topic  - Authorized
 Read from a-topic as pepe [as fozzie read from a-topic](KAFKA-OAUTH-TEST.md)
@@ -67,17 +62,14 @@ No errors this time
 
 ```bash
 # Get Openldap POD
-openldap_pod=$(kubectl get po -l app=openldap-server -o custom-columns=:metadata.name)
-openldap_pod=`echo $openldap_pod | xargs`
+OPENLDAP_POD=$(kubectl -n openldap get po -l app=openldap-server-openldap-stack-ha -o custom-columns=:metadata.name)
+OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
 # Add Pepe to TopicARead Group in OpenLDAP
-kubectl exec -it $openldap_pod -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/remove-pepe-from-read.ldif'
-
-
+kubectl exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server-openldap-stack-ha.openldap:389 -D "cn=admin,dc=example,dc=org" -w admin -f /root/remove-pepe-from-read.ldif'
 ```
 
 **Openshift**
-
 
 ```bash
 # Get Openldap POD
@@ -85,8 +77,7 @@ OPENLDAP_POD=$(oc -n openldap get po -l deploymentconfig=openldap-server -o cust
 OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
 # Add Pepe to TopicARead Group in OpenLDAP
-oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /tmp/remove-pepe-from-read.ldif'
-
+oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapmodify -x -H ldap://openldap-server.openldap:389 -D "cn=Manager,dc=example,dc=com" -w admin -f /root/remove-pepe-from-read.ldif'
 ```
 
 ## Refresh Keycloak

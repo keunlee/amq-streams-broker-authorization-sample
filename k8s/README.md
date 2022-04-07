@@ -5,6 +5,7 @@
 The following are necessary to proceed with the setup of this demonstration: 
 
 - An accessible Kubernetes Cluster with sufficient privileges (i.e. K3D, Kind, Vanilla k8s)
+- Kubernetes server version >= 1.19.x
 - Kubernetes cluster Load Balancers must be deployed/enabled (i.e. metallb, traefik, cloud load balancers, etc.)
 - Make sure the following are installed and added to your PATH: 
     - [kubectx/kubens](https://github.com/ahmetb/kubectx)
