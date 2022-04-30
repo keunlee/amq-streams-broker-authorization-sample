@@ -22,7 +22,7 @@ The infrastructure to be created will consist of the following components:
 
 - [OpenLDAP](https://www.openldap.org/) - An LDAP Server for managing LDAP groups and users
 - [Red Hat SSO](https://access.redhat.com/products/red-hat-single-sign-on) - Keycloak SSO Server
-- [Red Hat AMQ Streams](https://www.redhat.com/en/resources/amq-streams-datasheet) - Kafka
+- [Red Hat AMQ Streams - Broker version 3.1.0](https://www.redhat.com/en/resources/amq-streams-datasheet) - Kafka
 
 > You will need to have the following namespaces available for use in this demo:
 
