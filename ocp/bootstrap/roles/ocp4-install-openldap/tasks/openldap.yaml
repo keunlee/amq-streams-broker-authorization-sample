@@ -1,8 +1,3 @@
-- name: Update 'deployer' service account privileges
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'deployer-rolebinding.yaml.j2') }}"
-
 - name: Create OpenLDAP Namespaces
   kubernetes.core.k8s:
     state: present
@@ -10,11 +5,14 @@
 
 - name: Install OpenLDAP
   shell: |
-    LDAP_DEPLOYMENT_NAME=$(oc -n openldap get deploymentconfig -o jsonpath={.items..metadata.name})
+    LDAP_DEPLOYMENT_NAME=$(oc -n openldap get deployment -o jsonpath={.items..metadata.name})
     if [ -z "$LDAP_DEPLOYMENT_NAME" ];
     then
       echo "Installing OpenLDAP"
-      oc -n openldap new-app --as-deployment-config=true --docker-image=openshift/openldap-2441-centos7 --name=openldap-server
+      oc adm policy add-scc-to-user privileged system:serviceaccount:openldap:default
+      oc -n openldap create deployment openldap-server --image=openshift/openldap-2441-centos7
+      oc -n openldap patch deployment openldap-server -p '{"spec":{"template":{"spec":{"containers":[{"name":"openldap-2441-centos7","securityContext":{"privileged":true}}]}}}}'
+      oc -n openldap expose deployment openldap-server --port=389 --target-port=389
       sleep 20    
     else
       echo "OpenLDAP Already Deployed"
@@ -25,14 +23,14 @@
 
 - name: Wait for OpenLDAP Deployment Pod to be ready
   shell: |
-    oc -n openldap wait --for=condition=Ready pods --timeout=360s --selector deploymentconfig=openldap-server
+    oc -n openldap wait --for=condition=Ready pods --timeout=360s --selector app=openldap-server
   register: openldap_pods_ready
 
 - debug: msg="{{ openldap_pods_ready.stdout }}"
     
 - name: Create LDAP Org, Groups, and Users
   shell: |
-    OPENLDAP_POD=$(oc -n openldap get po -l deploymentconfig=openldap-server -o custom-columns=:metadata.name)
+    OPENLDAP_POD=$(oc -n openldap get po -l app=openldap-server -o custom-columns=:metadata.name)
     OPENLDAP_POD=`echo $OPENLDAP_POD | xargs`
 
     ALREADY_INSTALLED=$(oc -n openldap exec -it $OPENLDAP_POD -- /bin/bash -c 'ldapsearch -x -H ldap://openldap-server.openldap:389 -b dc=example,dc=com -D "cn=Manager,dc=example,dc=com" -w admin' | grep 'numResponses: 13' | grep -q "numResponses: 13" && echo "true" || echo "false")
